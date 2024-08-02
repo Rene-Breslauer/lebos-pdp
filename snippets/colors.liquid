@@ -1,0 +1,23 @@
+{% comment %}
+  Renders colors.
+
+  Usage:
+      {% render 'colors' %}
+{% endcomment %}
+
+{% style %}
+  :root {
+    --color-white: 255 255 255;
+    --color-black: 0 0 0;
+
+    --color-primary: {{ settings.primary.red }} {{ settings.primary.green }} {{ settings.primary.blue }};
+    --color-brand: {{ settings.brand.red }} {{ settings.brand.green }} {{ settings.brand.blue }};
+
+    --color-green-400: {{ settings.green_400.red }} {{ settings.green_400.green }} {{ settings.green_400.blue }};
+
+    --color-gray-100: {{ settings.gray_100.red }} {{ settings.gray_100.green }} {{ settings.gray_100.blue }};
+    --color-gray-200: {{ settings.gray_200.red }} {{ settings.gray_200.green }} {{ settings.gray_200.blue }};
+    --color-gray-700: {{ settings.gray_700.red }} {{ settings.gray_700.green }} {{ settings.gray_700.blue }};
+    --color-gray-800: {{ settings.gray_800.red }} {{ settings.gray_800.green }} {{ settings.gray_800.blue }};
+  }
+{% endstyle %}

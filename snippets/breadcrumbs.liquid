@@ -1,0 +1,65 @@
+{% comment %}
+  Renders breadcrumbs. It is based on the current template and the current page.
+
+  Usage:
+      {% render 'breadcrumbs' %}
+{% endcomment %}
+
+{% unless template == 'index1' %}
+  {% assign t = template | split: '.' | first %}
+
+  <nav class="breadcrumbs breadcrumbs-{{ t }} my-3.75 md:my-5">
+    <div class="container">
+      <ul class="leading-4.5 flex overflow-auto whitespace-nowrap text-sm tracking-[0.5px]">
+        <li class="inline-flex items-center">
+          <a href="/" title="Home" class=" text-gray-700">Home</a>
+          <span class="text-brand mx-[9px]">/</span>
+        </li>
+
+        {% case t %}
+          {% when 'search' %}
+            <li class="inline-flex items-center font-semibold text-gray-800">
+              <span>{{ search.terms }}</span>
+            </li>
+
+          {% when 'product' %}
+            {% assign breadcrumb_collection = product.metafields.custom.breadrumb_collection.value %}
+
+            {% if breadcrumb_collection != blank %}
+              <li class="inline-flex items-center">
+                <a href="{{ breadcrumb_collection.url }}" title="{{ breadcrumb_collection.title }}">
+                  {{ breadcrumb_collection.title }}
+                </a>
+                <span class="text-brand mx-[9px]">/</span>
+              </li>
+            {% endif %}
+
+            <li class="inline-flex items-center font-semibold text-gray-800">
+              <span>{{ product.title }}</span>
+            </li>
+
+          {% when 'collection' %}
+            {% assign breadcrumb_collection = collection.metafields.custom.breadrumb_collection.value %}
+
+            {% if breadcrumb_collection != blank %}
+              <li class="inline-flex items-center">
+                <a href="{{ breadcrumb_collection.url }}" title="{{ breadcrumb_collection.title }}">
+                  {{ breadcrumb_collection.title }}
+                </a>
+                <span class="text-brand mx-[9px]">/</span>
+              </li>
+            {% endif %}
+
+            <li class="inline-flex items-center font-semibold text-gray-800">
+              <span>{{ collection.title }}</span>
+            </li>
+
+          {% else %}
+            <li class="inline-flex items-center font-semibold text-gray-800">
+              <span>{{ page_title }}</span>
+            </li>
+        {% endcase %}
+      </ul>
+    </div>
+  </nav>
+{% endunless %}

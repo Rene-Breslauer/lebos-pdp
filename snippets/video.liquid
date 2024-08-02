@@ -1,0 +1,34 @@
+{% comment %}
+  Renders video element.
+
+  Accepts:
+  - video: {Object}
+  - poster_url: {String}
+  - class: {String}
+  - video_url: {String}
+  - autoplay: {Boolean}
+
+  Usage:
+      {% render 'video', video: video, poster_url: image, autoplay: true %}
+{% endcomment %}
+
+{% liquid
+  assign video_url = video.sources[1].url
+  assign poster_url = video.preview_image | image_url
+%}
+
+{% if video != blank %}
+  <video
+    {% if class != blank %}
+      class="{{ class }}"
+    {% endif %}
+    {% if poster_url != blank %}
+      poster="{{ poster_url }}"
+    {% endif %}
+    loop
+    muted
+    playsinline
+  >
+    <source src="{{ video_url }}" type="video/mp4">
+  </video>
+{% endif %}

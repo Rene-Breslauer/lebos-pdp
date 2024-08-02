@@ -1,0 +1,36 @@
+{
+  "name": "template-basics",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "adastra dev --theme-editor-sync --store=https://lebos-test.myshopify.com/",
+    "theme:create": "shopify theme push -u --ignore assets/adastra.manifest.json --ignore package.json --ignore pnpm-lock.yaml --ignore ./*.config.* --ignore node_modules --ignore apps/* --ignore tsconfig.json",
+    "theme:push": "shopify theme push --ignore assets/adastra.manifest.json --ignore package.json --ignore pnpm-lock.yaml --ignore ./*.config.* --ignore node_modules --ignore apps/* --ignore tsconfig.json -t",
+    "build": "adastra build",
+    "preview": "adastra preview",
+    "check": "adastra check",
+    "format": "prettier --write \"./**/*.{ts,css,liquid}\"",
+    "lint:liquid": "shopify theme check --path=./ --config=.theme-check.yml --auto-correct || exit 0",
+    "lint:ts": "eslint \"./src/**/*.ts\" --fix -c .eslintrc || exit 0",
+    "lint": "pnpm run /^lint:/"
+  },
+  "devDependencies": {
+    "@shopify/cli": "latest",
+    "@shopify/theme": "latest",
+    "adastra-cli": "latest",
+    "adastra-plugin": "latest",
+    "adastra-prettier-config": "latest",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.4",
+    "tailwindcss": "^3.2.7",
+    "vite": "^4.1.4"
+  },
+  "prettier": "adastra-prettier-config",
+  "dependencies": {
+    "@shopify/theme-product-form": "^4.1.1",
+    "alpinejs": "^3.14.1",
+    "swiper": "^11.1.9",
+    "typescript": "^5.5.4"
+  }
+}

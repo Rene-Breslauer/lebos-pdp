@@ -1,0 +1,83 @@
+{% render 'offset',
+  padding_top_mobile: section.settings.padding_top_mobile,
+  padding_bottom_mobile: section.settings.padding_bottom_mobile,
+  padding_top_desktop: section.settings.padding_top_desktop,
+  padding_bottom_desktop: section.settings.padding_bottom_desktop
+%}
+
+{% liquid
+  assign title = page.title | escape
+  assign is_title_shown = section.settings.show_title
+
+  assign content = page.content
+  assign is_content_shown = section.settings.show_content
+%}
+
+<section id="section-{{ section.id }}">
+  <div class="container">
+    <h1 class="title{% unless is_title_shown %} !hidden{% endunless %}">
+      {{ title }}
+    </h1>
+
+    <div class="content{% unless is_content_shown %} !hidden{% endunless %}">
+      {{ content }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_title",
+        "label": "Show Title",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_content",
+        "label": "Show Content",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Paddings"
+      },
+      {
+        "type": "number",
+        "id": "padding_top_mobile",
+        "label": "Padding Top Mobile (px)",
+        "info": "Until 768px",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "padding_bottom_mobile",
+        "label": "Padding Bottom Mobile (px)",
+        "info": "Until 768px",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "padding_top_desktop",
+        "label": "Padding Top Desktop (px)",
+        "info": "From 768px",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "padding_bottom_desktop",
+        "label": "Padding Bottom Desktop (px)",
+        "info": "From 768px",
+        "default": 0
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,73 @@
+{% comment %}
+  Renders product variant-picker
+
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
+  Usage:
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+{% endcomment %}
+{%- unless product.has_only_default_variant -%}
+  <variant-selects
+    id="variant-selects-{{ section.id }}"
+    data-section="{{ section.id }}"
+    class="flex flex-col gap-6"
+    {{ block.shopify_attributes }}
+  >
+    {%- for option in product.options_with_values -%}
+      {%- liquid
+        assign swatch_count = option.values | map: 'swatch' | compact | size
+        assign picker_type = block.settings.picker_type
+
+        if swatch_count > 0 and block.settings.swatch_shape != 'none'
+            assign picker_type = 'swatch'
+          endif
+      -%}
+      {%- if picker_type == 'swatch' -%}
+        <fieldset class="order-1">
+           <legend class="mb-3 text-gray-800 uppercase">
+            <span class="font-semibold">{{ option.name }}:</span>
+            <span data-selected-value>
+              {{- option.selected_value -}}
+            </span>
+          </legend>
+          <div class="flex">
+          {% render 'product-variant-options',
+            product: product,
+            option: option,
+            block: block,
+            picker_type: picker_type
+          %}
+          </div>
+        </fieldset>
+       
+      {%- else -%}
+        <fieldset class="order-2">
+          <legend class="mb-3 text-gray-800 uppercase">
+            <span class="font-semibold">{{ option.name }}:</span>
+            <span data-selected-value>
+              {{- option.selected_value -}}
+            </span>
+          </legend>
+          <div class="flex gap-2">
+          {% render 'product-variant-options',
+            product: product,
+            option: option,
+            block: block,
+            picker_type: picker_type
+          %}
+          </div>
+          {% if option.name == 'Size' %}
+          <div class="flex items-center">
+            {% render 'icon', icon: 'ruler', class: '!h-10 !w-10' %}
+            <a href="#" class="text-gray-800 text-sm underline">Size Guide</a>
+          </div>
+          {% endif %}
+        </fieldset>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <script type="application/json" data-selected-variant>{{ product.selected_or_first_available_variant | json }}</script>
+  </variant-selects>
+{%- endunless -%}

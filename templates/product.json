@@ -1,0 +1,94 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor_PXPjTT": {
+          "type": "vendor",
+          "settings": {
+          }
+        },
+        "sku_8QXAcH": {
+          "type": "sku",
+          "settings": {
+            "text_style": "body"
+          }
+        },
+        "title_fKqtqT": {
+          "type": "title",
+          "settings": {
+          }
+        },
+        "price_7M9UeG": {
+          "type": "price",
+          "settings": {
+          }
+        },
+        "variant_picker_bVkTzp": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_KJpejp": {
+          "type": "quantity_selector",
+          "settings": {
+          }
+        },
+        "buy_buttons_PCFpTp": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "product_form_hgwJTB": {
+          "type": "product_form",
+          "settings": {
+          }
+        },
+        "store_availability_mTWwbz": {
+          "type": "store_availability",
+          "settings": {
+          }
+        },
+        "description_yCkjKR": {
+          "type": "description",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "vendor_PXPjTT",
+        "sku_8QXAcH",
+        "title_fKqtqT",
+        "price_7M9UeG",
+        "variant_picker_bVkTzp",
+        "quantity_selector_KJpejp",
+        "buy_buttons_PCFpTp",
+        "product_form_hgwJTB",
+        "store_availability_mTWwbz",
+        "description_yCkjKR"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "hide",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

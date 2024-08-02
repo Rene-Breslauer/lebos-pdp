@@ -1,0 +1,54 @@
+
+ {% comment %} test
+{% assign variant_images = shop.metaobjects.variant_images %}
+
+{% for fields in shop.metaobjects.variant_images.values %}
+ {% if fields %}
+ {% assign variants = fields.variants.value %}
+ {% assign images = fields.images.value %}
+  <div>
+   {% for variant in variants %}
+   <p>{{ variant.id }}</p>
+   {% endfor %}
+    {% for image in images %}
+      <img src="{{ image.src | img_url: '1x1', scale: 2 }}" alt="{{ image.alt | escape }}" class="w-full">
+   {% endfor %}
+  </div>
+ {% endif %}
+{% endfor %}  {% endcomment %}
+<div x-data="productGallery('{{ product.handle }}', {{ product.selected_or_first_available_variant.id }})" class="flex w-full">
+  <div class="swiper w-full h-[100px] lg:max-w-[100px] lg:h-[700px]">
+  <div class="flex flex-row lg:flex-col swiper-wrapper w-full">
+   {%- for media in product.media -%}
+    <div @click="updateImage('{{ shop.url }}/{{ media.preview_image }}')" class="swiper-slide cursor-pointer">
+        {{ media.preview_image | image_url: width: 1946 | image_tag: class: image_class, loading: lazy, sizes: sizes, widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946', class: 'w-full h-full object-contain' }}
+    </div>
+   {%- endfor -%}
+  </div>
+</div>
+  <div class="hidden lg:block w-full object-cover">
+      <img 
+      class="featuredMedia w-full"
+      src="{{ product.featured_image.src | img_url: '500x'}}" alt="{{ image.alt | escape }}" class="w-full object-cover">
+  </div>
+</div>
+
+<script>
+  window.variantImages = {
+    {% for fields in shop.metaobjects.variant_images.values %}
+    {% if fields %}
+    {% assign variants = fields.variants.value %}
+    {% assign images = fields.images.value %}
+    {% for variant in variants %}
+    "{{ variant.id }}": [
+      {% for image in images %}
+      {{ image | json }},
+      {% endfor %}
+    ],
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+  }
+
+  console.log('variant image',variantImages)
+</script>

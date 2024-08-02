@@ -1,0 +1,113 @@
+{% comment %}
+  Renders forms.
+
+  Usage:
+      {% render 'ui-forms' %}
+{% endcomment %}
+
+<div class="grid grid-cols-2 gap-5 lg:grid-cols-12">
+  <div class="col-span-2 lg:col-span-12">
+    <div class="flex flex-wrap items-center gap-5">
+      <h2 class="font-mono text-base">Use this class to reset input styles:</h2>
+      <div class="rounded bg-stone-300/40 px-2 py-1 font-mono text-sm italic">.reset-styles</div>
+    </div>
+  </div>
+
+  <div class="border-primary col-span-2 rounded border border-dashed bg-stone-300/20 p-8 lg:col-span-6">
+    <div class="mb-3 flex items-center gap-3">
+      <span class="w-25 font-mono text-sm">Default</span>
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Username">
+      </div>
+    </div>
+
+    <div class="mb-3 flex items-center gap-3">
+      <span class="w-25 font-mono text-sm">Error</span>
+      <div class="input-group error">
+        <input type="text" id="email" placeholder="Email">
+        {% render 'icon', icon: 'cross', class: 'icon-wrapper' %}
+      </div>
+    </div>
+
+    <div class="mb-3 flex items-center gap-3">
+      <span class="w-25 font-mono text-sm">Select</span>
+      <div class="input-group">
+        <select name="select" id="select" placeholder="Country">
+          <option>United States</option>
+          <option>Portugal</option>
+          <option>Ukraine</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <span class="w-25 font-mono text-sm">Textarea</span>
+      <div class="input-group">
+        <textarea name="textarea" id="textarea" placeholder="Message"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-span-2 lg:col-span-6">
+    <div class="border-primary mb-5 rounded border border-dashed bg-stone-300/20 p-8">
+      <div class="mb-3">
+        <div class="input-group">
+          <input type="checkbox" class="peer" id="checkbox-1">
+          <label for="checkbox-1">
+            {% render 'icon', icon: 'checkmark', class: 'icon-wrapper' %}
+            <span>Unchecked checkbox</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="input-group">
+          <input type="checkbox" class="peer" id="checkbox-2" checked>
+          <label for="checkbox-2">
+            {% render 'icon', icon: 'checkmark', class: 'icon-wrapper' %}
+            <span>Checked checkbox</span>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <div class="input-group">
+          <input type="checkbox" class="peer" id="checkbox-3" disabled>
+          <label for="checkbox-3">
+            {% render 'icon', icon: 'checkmark', class: 'icon-wrapper' %}
+            <span>Disabled checkbox</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-primary rounded border border-dashed bg-stone-300/20 p-8">
+      <div class="mb-3">
+        <div class="input-group">
+          <input type="radio" clas="peer" id="radio-1">
+          <label for="radio-1">
+            <span>Unchecked radio</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="input-group">
+          <input type="radio" clas="peer" id="radio-2" checked>
+          <label for="radio-2">
+            <span>Checked radio</span>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <div class="input-group">
+          <input type="radio" clas="peer" id="radio-3" disabled>
+          <label for="radio-3">
+            <span>Disabled radio</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

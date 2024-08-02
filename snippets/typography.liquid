@@ -1,0 +1,31 @@
+{% comment %}
+  Renders fonts links and variables.
+
+  Usage:
+      {% render 'typography' %}
+{% endcomment %}
+
+{% style %}
+  :root {
+    --font-body-family: 'Manrope';
+    --font-body-style: normal;
+    --font-body-weight: 500;
+
+    --font-heading-family: 'ZillaSlab';
+    --font-heading-style: normal;
+    --font-heading-weight: 700;
+
+    --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+    --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
+
+    --font-size-xs: calc(var(--font-body-scale) * 0.75rem); {% comment %} 12px {% endcomment %}
+    --font-size-sm: calc(var(--font-body-scale) * 0.875rem); {% comment %} 14px {% endcomment %}
+    --font-size-base: calc(var(--font-body-scale) * 1rem); {% comment %} 16px {% endcomment %}
+    --font-size-lg: calc(var(--font-body-scale) * 1.125rem); {% comment %} 18px {% endcomment %}
+    --font-size-xl: calc(var(--font-body-scale) * 1.25rem); {% comment %} 20px {% endcomment %}
+    --font-size-2xl: calc(var(--font-body-scale) * 1.5rem); {% comment %} 24px {% endcomment %}
+    --font-size-3xl: calc(var(--font-body-scale) * 1.875rem); {% comment %} 30px {% endcomment %}
+    --font-size-4xl: calc(var(--font-body-scale) * 2.125rem); {% comment %} 34px {% endcomment %}
+    --font-size-5xl: calc(var(--font-body-scale) * 2.75rem); {% comment %} 44px {% endcomment %}
+  }
+{% endstyle %}
