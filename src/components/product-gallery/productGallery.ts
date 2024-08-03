@@ -10,18 +10,20 @@ export default (Alpine: any) => {
       productHandle,
       selectedVariant,
       newVariantImages: [],
+      config: {},
       swiper: null as Swiper | null,
 
       init() {
-        const config = {
-          direction: 'vertical',
+        this.config = {
+          direction: 'horizontal',
           loop: false,
           slidesPerView: 1,
           spaceBetween: 20,
+          resizeObserver: true,
           breakpoints: {
             767: {
+              direction: 'vertical',
               slidesPerView: 5,
-              direction: 'horizontal'
             }
           },
           pagination: {
@@ -32,7 +34,7 @@ export default (Alpine: any) => {
           }
         }
 
-        this.swiper = new Swiper('.swiper', config)
+        this.swiper = new Swiper('.swiper', this.config)
 
         window.addEventListener('option-changed', event => {
           this.updateGallery(event.detail.variant)
@@ -78,6 +80,8 @@ export default (Alpine: any) => {
 
       updateGallery(variant: object) {
         this.newVariantImages = []
+        this.swiper.destroy()
+       
         let swiperWrapper = this.$el.querySelector('.swiper-wrapper')
         swiperWrapper.innerHTML = ''
 
@@ -88,29 +92,44 @@ export default (Alpine: any) => {
           this.newVariantImages.push(image)
         })
 
-        this.swiper.update()
+       
+        // swiperWrapper.innerHTML = `
+        //   <template x-for="image in newVariantImages">
+        //     <div @click="updateImage(image)" class="swiper-slide cursor-pointer">
+        //       <img :src="image" class='h-full w-full object-contain'>
+        //     </div>
+        //   </template>
+        // `
 
-        swiperWrapper.innerHTML = `
-          <template x-for="image in newVariantImages">
-            <div @click="updateImage(image)" class="swiper-slide cursor-pointer">
-              <img :src="image" class='h-full w-full object-contain'>
-            </div>
-          </template>
-        `
-        
+        this.newVariantImages.forEach((image: any) => {
+          let slide = document.createElement('div')
+          slide.classList.add('swiper-slide', 'cursor-pointer')
+          slide.addEventListener('click', () => {
+            this.updateImage(image)
+          })
+          let img = document.createElement('img')
+          img.src = image
+          img.classList.add('h-full', 'w-full', 'object-contain')
+          slide.appendChild(img)
+          swiperWrapper.appendChild(slide)
+        })
+
+        this.swiper = new Swiper('.swiper', this.config)
+
+        console.log('this swiper', this.swiper)
       },
 
       updateImage(mediaId: string) {
         document.querySelector('.featuredMedia').src = mediaId
       },
       updateSlider() {
-      this.swiper.changeDirection('horizontal', true)
+      // this.swiper.changeDirection('horizontal', true)
       },
       updateVerticalSliderHeight() {
         let verticalSlider = this.$el
         let sliderHeight = this.$refs.imageTrack.offsetHeight
         verticalSlider.style.height = sliderHeight + 'px'
-         this.swiper.changeDirection('vertical', true)
+        //  this.swiper.changeDirection('vertical', true)
       }
     })
   )
