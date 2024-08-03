@@ -257,35 +257,23 @@ input[name='options[Color]']:checked+label {
 }
 
 .tabs label {
-  order: 1;
-  display: block;
-  padding: 1rem 2rem;
-  margin-right: 0.2rem;
-  cursor: pointer;
-  background: #90CAF9;
-  font-weight: bold;
-  transition: background ease 0.2s;
+  @apply order-1 block py-1 px-2 cursor-pointer transition border border-gray-200;
 }
 
 .tabs .tab {
-  order: 99;
-  flex-grow: 1;
-  width: 100%;
-  display: none;
-  padding: 1rem;
-  background: #fff;
+  @apply order-[99] flex-1 w-full hidden p-4;
 }
 
 .tabs input[type=radio] {
-  display: none;
+  @apply hidden;
 }
 
 .tabs input[type=radio]:checked+label {
-  background: #fff;
+  @apply bg-gray-800 text-white border-gray-800;
 }
 
 .tabs input[type=radio]:checked+label+.tab {
-  display: block;
+  @apply block;
 }
 
 @media (max-width: 45em) {
@@ -302,18 +290,10 @@ input[name='options[Color]']:checked+label {
   }
 }
 
-/**
- * Generic Styling
-*/
-body {
-  background: #eee;
-  min-height: 100vh;
-  box-sizing: border-box;
-  padding-top: 10vh;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-weight: 300;
-  line-height: 1.5;
-  max-width: 60rem;
-  margin: 0 auto;
-  font-size: 112%;
+.swiper-pagination-bullet {
+  @apply !bg-transparent border-2 border-white w-2.5 h-2.5 !opacity-100;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  @apply !bg-brand border-brand;
 }

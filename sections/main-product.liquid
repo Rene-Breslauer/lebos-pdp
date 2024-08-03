@@ -9,9 +9,9 @@
     data-zoom-on-hover
   {% endif %}
 >
- <div class="container">
-    <div class="grid grid-cols-12 col-start-1">
-      <div class="col-span-6 gap-12">
+ <div class="container pt-5">
+    <div class="grid grid-cols-4 md:grid-cols-12 col-start-1">
+      <div class="grid grid-cols-1 col-span-4 md:col-span-6 md:gap-12">
         {% render 'product-media-gallery', variant_images: variant_images %}
          
          {%- for block in section.blocks -%}
@@ -20,15 +20,14 @@
             {%- if product.description != blank -%}
               <div class="tabs">
                 <input type="radio" name="tabs" id="tabone" checked="checked">
-                <label for="tabone">Description</label>
+                <label for="tabone" class="w-1/2">Description</label>
                 <div class="tab">
                  <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
                   {{ product.description }}
                 </div>
                 </div>
-                
                 <input type="radio" name="tabs" id="tabtwo">
-                <label for="tabtwo">Specifications</label>
+                <label for="tabtwo" class="w-1/2">Specifications</label>
                 <div class="tab">
                   <h1>Tab Two Content</h1>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -40,7 +39,7 @@
       
       </div>
      
-      <div class="col-span-5 col-start-8">
+      <div class="col-span-4 md:col-span-5 md:col-start-8">
         <section
           id="ProductInfo-{{ section.id }}"
           class="flex flex-col gap-6"

@@ -1,4 +1,8 @@
 import Swiper from 'swiper/bundle'
+import 'swiper/swiper-bundle.css'
+import { Navigation, Pagination, Scrollbar } from 'swiper/modules'
+
+
 export default (Alpine: any) => {
   Alpine.data(
     'productGallery',
@@ -11,8 +15,21 @@ export default (Alpine: any) => {
       init() {
         const config = {
           direction: 'vertical',
-          loop: true,
-          slidesPerView: 5
+          loop: false,
+          slidesPerView: 1,
+          spaceBetween: 20,
+          breakpoints: {
+            767: {
+              slidesPerView: 5,
+              direction: 'horizontal'
+            }
+          },
+          pagination: {
+            el: '.swiper-pagination'
+          },
+          zoom: {
+            maxRatio: 2
+          }
         }
 
         this.swiper = new Swiper('.swiper', config)
@@ -38,6 +55,8 @@ export default (Alpine: any) => {
 
         if (this.browserWidth < 767) {
           this.updateSlider()
+        } else {
+          this.updateVerticalSliderHeight()
         }
 
         const updateWidth = throttle(() => {
@@ -50,21 +69,26 @@ export default (Alpine: any) => {
         this.$watch('browserWidth', newBrowserWidth => {
           if (newBrowserWidth < 767) {
             this.updateSlider()
-          } 
+            this.$refs.verticalSlider.style.height = 'auto'
+          } else {
+             this.updateVerticalSliderHeight()
+          }
         })
       },
 
-      updateGallery( variant: object) {
+      updateGallery(variant: object) {
         this.newVariantImages = []
         let swiperWrapper = this.$el.querySelector('.swiper-wrapper')
         swiperWrapper.innerHTML = ''
-        
-        document.querySelector('.featuredMedia').src = variant.featured_media.preview_image.src
 
+        document.querySelector('.featuredMedia').src =
+          variant.featured_media.preview_image.src
 
         window.variantImages[variant.id].forEach((image: any) => {
           this.newVariantImages.push(image)
         })
+
+        this.swiper.update()
 
         swiperWrapper.innerHTML = `
           <template x-for="image in newVariantImages">
@@ -73,22 +97,20 @@ export default (Alpine: any) => {
             </div>
           </template>
         `
-        this.swiper.update()
-    
+        
       },
 
       updateImage(mediaId: string) {
-        document.querySelector('.featuredMedia').src =
-          mediaId
+        document.querySelector('.featuredMedia').src = mediaId
       },
       updateSlider() {
-        this.swiper.destroy()
-
-        this.swiper = new Swiper('.swiper', {
-          direction: 'horizontal',
-          loop: true,
-          slidesPerView: 5,
-        })
+      this.swiper.changeDirection('horizontal', true)
+      },
+      updateVerticalSliderHeight() {
+        let verticalSlider = this.$el
+        let sliderHeight = this.$refs.imageTrack.offsetHeight
+        verticalSlider.style.height = sliderHeight + 'px'
+         this.swiper.changeDirection('vertical', true)
       }
     })
   )

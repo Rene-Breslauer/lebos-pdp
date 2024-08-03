@@ -16,18 +16,22 @@
   </div>
  {% endif %}
 {% endfor %}  {% endcomment %}
-<div x-data="productGallery('{{ product.handle }}', {{ product.selected_or_first_available_variant.id }})" class="flex w-full">
-  <div class="swiper w-full h-[100px] lg:max-w-[100px] lg:h-[700px]">
-  <div class="flex flex-row lg:flex-col swiper-wrapper w-full">
+<div x-data="productGallery('{{ product.handle }}', {{ product.selected_or_first_available_variant.id }})" class="flex w-full max-w-[100vw]">
+  <div x-ref="verticalSlider" class="swiper w-full h-[100px] md:max-w-[100px] md:h-auto overflow-auto">
+  <div class="swiper-wrapper w-full">
    {%- for media in product.media -%}
     <div @click="updateImage('{{ shop.url }}/{{ media.preview_image }}')" class="swiper-slide cursor-pointer">
+      <div class="swiper-zoom-container">
         {{ media.preview_image | image_url: width: 1946 | image_tag: class: image_class, loading: lazy, sizes: sizes, widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946', class: 'w-full h-full object-contain' }}
+      </div>
     </div>
    {%- endfor -%}
   </div>
+  <div class="swiper-pagination md:hidden"></div>
 </div>
-  <div class="hidden lg:block w-full object-cover">
+  <div class="hidden md:block w-full object-cover">
       <img 
+      x-ref="imageTrack"
       class="featuredMedia w-full"
       src="{{ product.featured_image.src | img_url: '500x'}}" alt="{{ image.alt | escape }}" class="w-full object-cover">
   </div>
