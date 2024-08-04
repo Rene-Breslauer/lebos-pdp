@@ -119,6 +119,7 @@ export default (Alpine: any) => {
 
             this.groupedVariants[optionName][optionValue].forEach(variant => {
                 const optionElement = document.createElement('div')
+                optionElement.classList.add('flex')
                 let fieldName = fieldset.dataset.name
                 let fieldForm = fieldset.dataset.form
                 optionElement.innerHTML = `
@@ -134,6 +135,7 @@ export default (Alpine: any) => {
                 <label
                   for="${fieldName}-${variant[optionName]}"
                   class="px-3.5 py-1.5 border border-gray-200 rounded-sm text-sm font-semibold cursor-pointer transition"
+                  :class="${variant.available} ? '' : 'cursor-not-allowed bg-gray-200 line-through text-gray-700'"
                 >
                   ${variant[optionName]}
                 </label>

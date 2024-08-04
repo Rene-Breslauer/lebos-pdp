@@ -69,21 +69,24 @@
     %}
   {%- else -%}
     <input
-
       type="radio"
       id="{{ option.name }}-{{ value }}"
       name="options[{{ option.name | escape }}]"
       value="{{ value | escape }}"
       form="{{ product_form_id }}"
-      class="appearance-none h-0 w-0 absolute inset-0"
+      class="appearance-none h-0 w-0 absolute inset-0 cursor-pointer"
       {% if value.selected %}
         checked
       {% endif %}
     >
     <label 
-    for="{{ option.name }}-{{ value }}" class="px-3.5 py-1.5 border border-gray-200 rounded-sm text-sm font-semibold cursor-pointer transition"
+    for="{{ option.name }}-{{ value }}"
+    class="px-3.5 py-1.5 border border-gray-200 rounded-sm text-sm font-semibold cursor-pointer transition
+       {% if value.available == false %}
+        cursor-not-allowed bg-gray-200 line-through text-gray-700
+        {% endif %}"
     >
-      {{ value -}}
+      {{- value -}}
     </label>
   {%- endif -%}
 {%- endfor -%}
