@@ -1,22 +1,25 @@
 
 <div x-data="storeAvailability({{ product.selected_or_first_available_variant.id }})">
-  <div class="bg-gray-100 p-3.5">
-  Available to pick up in the following stores
+  <div class="bg-gray-100 p-3.5 flex items-center gap-2.5">
+    {% render 'icon', icon: 'checkmark-circle', class: '!h-5 !w-5' %}
+    <span class="uppercase font-bold">Available to pick up in the following stores</span>
   </div>
-<template x-for="location in pickupLocations" :key="location.id">
-  <div class="flex gap-2 w-full text-xs p-3.5 border-b border-gray-200">
-    <div class="flex flex-col gap-2 w-full">
-      <span x-text="location.name"></span>
-      <address class="whitespace-nowrap">
-        <span x-html="location.address"></span>
-        <span x-text="location.phone"></span>
-      </address>
-      </div>
-      <div @click="renderPopup(location)" class="cursor-pointer w-fit h-fit">
-        {% render 'icon', icon: 'question-circle', class: '!h-3 !w-3 text-brand' %}
-      </div>
-  </div>
-</template>
+  <template x-for="location in pickupLocations" :key="location.id">
+    <div class="flex gap-2 w-full text-xs p-3.5 border-t border-l border-r border-gray-200"
+    :class="{'border-b': index !== pickupLocations.length - 1}"
+    >
+      <div class="flex flex-col gap-2 w-full">
+        <span class="uppercase text-xs font-bold" x-text="location.name"></span>
+        <address class="text-xs">
+          <span class="whitespace-nowrap" x-html="location.address"></span>
+          <span x-text="location.phone"></span>
+        </address>
+        </div>
+        <div @click="renderPopup(location)" class="cursor-pointer w-fit h-fit">
+          {% render 'icon', icon: 'question-circle', class: '!h-3 !w-3 text-brand' %}
+        </div>
+    </div>
+  </template>
 {% comment %} <template x-teleport="body">
 <div x-show="locationModal" class="fixed inset-0 w-full h-full flex justify-center items-center">
   <dialog @click.away="locationModal = false" class="flex bg-white max-w-[460px] mx-auto h-[500px] top-[50%] z-10">

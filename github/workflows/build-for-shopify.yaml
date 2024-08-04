@@ -1,0 +1,73 @@
+name: Build and push to development-build subtree
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - README.md
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build
+        run: |
+          pnpm run build
+
+      - name: Extract branch name
+        id: extract_branch
+        shell: bash
+        run: echo "BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+
+      - name: Add -build subtree
+        run: |
+          git checkout -b "${{ steps.extract_branch.outputs.BRANCH }}-build" || true
+
+      - name: Add files to development-build subtree
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add .
+          git commit --amend --no-edit
+          git add -f assets/leb-*
+          git add -f snippets/adastra.liquid
+          git commit -m "Shopify git-busting commit: `date`"
+
+      - name: Push changes to development-build subtree
+        run: |
+          git config --global --add --bool push.autoSetupRemote true
+          git push --force

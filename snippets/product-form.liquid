@@ -14,11 +14,11 @@
     {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
     <div class="flex gap-2">
         <div class="quantity flex w-fit border border-gray-200 rounded-sm max-w-[132px]" data-url="{{ product.url }}" data-section="{{ section.id }}">
-          <button class="quantity__button py-5 px-4 flex items-center justify-center" name="minus" type="button" @click="quantity++">
-            {% render 'icon', icon: 'minus' %}
+          <button class="quantity__button py-5 px-4 flex items-center justify-center transition hover:bg-gray-100" name="minus" type="button" @click="quantity++">
+            {% render 'icon', icon: 'minus', class: '!h-2.5 !w-2.5' %}
           </button>
           <input
-          class="text-base text-center font-semibold w-full"
+          class="quantity text-base text-center font-semibold w-full"
           type="number"
           name="quantity"
           id="Quantity-{{ section.id }}"
@@ -33,15 +33,15 @@
           value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
           form="{{ product_form_id }}"
           >
-          <button class="quantity__button py-5 px-4 flex items-center justify-center" name="plus" type="button">
-            {% render 'icon', icon: 'plus' %}
+          <button class="quantity__button py-5 px-4 flex items-center justify-center transition hover:bg-gray-100" name="plus" type="button">
+            {% render 'icon', icon: 'plus', class: '!h-2.5 !w-2.5' %}
           </button>
             </div>
           <button
             id="ProductSubmitButton"
             type="submit"
             name="add"
-            class="button w-full"
+            class="button w-full uppercase"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == nil

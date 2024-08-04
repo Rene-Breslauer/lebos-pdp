@@ -20,16 +20,19 @@
             {%- if product.description != blank -%}
               <div class="tabs">
                 <input type="radio" name="tabs" id="tabone" checked="checked">
-                <label for="tabone" class="w-1/2">Description</label>
+                <label for="tabone" class="w-1/2 py-3 px-5 flex justify-center items-center">
+                {% render 'icon', icon: 'info-circle', class: '!h-2.5 !w-2.5' %}
+                Description</label>
                 <div class="tab">
                  <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
                   {{ product.description }}
                 </div>
                 </div>
                 <input type="radio" name="tabs" id="tabtwo">
-                <label for="tabtwo" class="w-1/2">Specifications</label>
+                <label for="tabtwo" class="w-1/2 py-3 px-5 flex justify-center items-center">
+                {% render 'icon', icon: 'list', class: '!h-2.5 !w-2.5' %}
+                Specifications</label>
                 <div class="tab">
-                  <h1>Tab Two Content</h1>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
               </div>
@@ -73,7 +76,7 @@
                 </div>
                 </div>
               {%- when 'vendor'-%}
-                <span class="py-1.5 px-2.5 border border-gray-200 rounded-sm w-fit">{{ product.vendor }}</span>
+                <span class="py-1.5 px-2.5 border border-gray-200 rounded-sm w-fit uppercase">{{ product.vendor }}</span>
               {%- when 'price' -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                   {%- render 'price',

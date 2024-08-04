@@ -261,7 +261,7 @@ input[name='options[Color]']:checked+label {
 }
 
 .tabs .tab {
-  @apply order-[99] flex-1 w-full hidden p-4;
+  @apply order-[99] flex-1 w-full hidden;
 }
 
 .tabs input[type=radio] {
@@ -297,3 +297,16 @@ input[name='options[Color]']:checked+label {
 .swiper-pagination-bullet.swiper-pagination-bullet-active {
   @apply !bg-brand border-brand;
 }
+
+    /* Hide the spinner on Chrome, Safari, Edge, Opera */
+    input[type="number"].quantity::-webkit-inner-spin-button,
+    input[type="number"].quantity::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  
+    /* Hide the spinner on Firefox */
+    input[type="number"].quantity {
+      -moz-appearance: textfield;
+    }
+  
