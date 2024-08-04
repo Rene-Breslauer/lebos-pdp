@@ -92,20 +92,11 @@ export default (Alpine: any) => {
           this.newVariantImages.push(image)
         })
 
-       
-        // swiperWrapper.innerHTML = `
-        //   <template x-for="image in newVariantImages">
-        //     <div @click="updateImage(image)" class="swiper-slide cursor-pointer">
-        //       <img :src="image" class='h-full w-full object-contain'>
-        //     </div>
-        //   </template>
-        // `
-
         this.newVariantImages.forEach((image: any) => {
           let slide = document.createElement('div')
           slide.classList.add('swiper-slide', 'cursor-pointer')
-          slide.addEventListener('click', () => {
-            this.updateImage(image)
+          slide.addEventListener('click', (event) => {
+            this.updateImage(event,image)        
           })
           let img = document.createElement('img')
           img.src = image
@@ -115,21 +106,25 @@ export default (Alpine: any) => {
         })
 
         this.swiper = new Swiper('.swiper', this.config)
-
-        console.log('this swiper', this.swiper)
       },
 
-      updateImage(mediaId: string) {
-        document.querySelector('.featuredMedia').src = mediaId
+      updateImage(event: object, mediaId: string) {
+        this.$refs.imageTrack.src = mediaId
+
+        let slides = document.querySelectorAll('.swiper-slide')
+
+        slides.forEach(slide => {
+
+           slide === event?.target?.parentElement || slide.querySelector('img') === event?.target
+             ? slide.classList.add('border', 'border-gray-800')
+             : slide.classList.remove('border', 'border-gray-800')
+         })
       },
-      updateSlider() {
-      // this.swiper.changeDirection('horizontal', true)
-      },
+
       updateVerticalSliderHeight() {
         let verticalSlider = this.$el
         let sliderHeight = this.$refs.imageTrack.offsetHeight
         verticalSlider.style.height = sliderHeight + 'px'
-        //  this.swiper.changeDirection('vertical', true)
       }
     })
   )

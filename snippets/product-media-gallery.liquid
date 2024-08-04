@@ -20,7 +20,7 @@
   <div x-ref="verticalSlider" class="swiper w-full h-[100px] md:max-w-[100px] md:h-auto overflow-auto">
   <div class="swiper-wrapper w-full">
    {%- for media in product.media -%}
-    <div @click="updateImage('{{ shop.url }}/{{ media.preview_image }}')" class="swiper-slide cursor-pointer">
+    <div @click="updateImage(event,'{{ shop.url }}/cdn/shop/{{ media.preview_image.src }}')" class="swiper-slide cursor-pointer">
       <div class="swiper-zoom-container">
         {{ media.preview_image | image_url: width: 1946 | image_tag: class: image_class, loading: lazy, sizes: sizes, widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946', class: 'w-auto object-cover md:w-full h-full md:object-contain' }}
       </div>
