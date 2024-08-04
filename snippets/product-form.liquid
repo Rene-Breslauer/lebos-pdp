@@ -1,13 +1,26 @@
  {%- liquid
+  assign available = product.selected_or_first_available_variant.available
   assign check_against_inventory = true
   if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
     assign check_against_inventory = false
   endif
   if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
     assign quantity_rule_soldout = true
+    assign available = false
   endif
+  
+  assign product_availability = ''
+  if product.selected_or_first_available_variant == nil
+    assign product_availability = 'unavailable'
+  elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout
+    assign product_availability = 'sold_out'
+  else
+    assign product_availability = 'available'
+  endif
+
+  assign availability = product_availability
   -%}
-<div x-data="productForm('{{ product.handle }}', {{ product.selected_or_first_available_variant.id }})" class="flex flex-col">
+<div x-data="productForm('{{ product.handle }}', {{ product.selected_or_first_available_variant.id }},{{ available }}, '{{ availability }}')" class="flex flex-col">
   {%- form 'product', product, id: product_form_id, class: 'form flex flex-col gap-6', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
     <input type="hidden" name="id" x-model="selectedVariant" value="{{ product.selected_or_first_available_variant.id }}" {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout or product.selected_or_first_available_variant == nil %} disabled {% endif %} class="product-variant-id">
     <input type="hidden" name="quantity" x-model="quantity" class="product-quantity">
@@ -42,6 +55,7 @@
             type="submit"
             name="add"
             class="button w-full uppercase"
+            :disabled="!available"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == nil
@@ -49,15 +63,18 @@
               disabled
             {% endif %}
           >
-            <span>
-              {%- if product.selected_or_first_available_variant == nil -%}
+              <span class="{% if product_availability == 'unavailable' %} flex {% else %} hidden {% endif %}"
+                :class="availability === 'unavailable' ? '!flex' : '!hidden'"> 
                 {{ 'products.product.unavailable' | t }}
-              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+              </span>
+              <span class="{% if product_availability == 'sold_out' %} flex {% else %} hidden {% endif %}"
+                :class="availability === 'sold_out' ? '!flex' : '!hidden'"> 
                 {{ 'products.product.sold_out' | t }}
-              {%- else -%}
+              </span>
+              <span class="{% if product_availability == 'available' %} flex {% else %} hidden {% endif %}"
+                :class="availability === 'available' ? '!flex' : '!hidden'"> 
                 {{ 'products.product.add_to_cart' | t }}
-              {%- endif -%}
-            </span>
+              </span>
           </button>
             </div>
           {%- if show_dynamic_checkout -%}
@@ -67,4 +84,51 @@
 </div>
 
 
+<script>
+  window.variant = {
+    {% for variant in product.variants %}
+      "{{ variant.id }}": {
+        "id": "{{ variant.id }}",
+        "available": "{{ variant.available }}",
+        "price": "{{ variant.price }}",
+        "compare_at_price": "{{ variant.compare_at_price }}",
+        "sku": "{{ variant.sku }}",
+        "barcode": "{{ variant.barcode }}",
+        "title": "{{ variant.title }}",
+        "image": "{{ variant.image.src | img_url: '500x' }}",
+        "inventory_quantity": "{{ variant.inventory_quantity }}",
+        "inventory_management": "{{ variant.inventory_management }}",
+        "inventory_policy": "{{ variant.inventory_policy }}",
+        "options": {
+          {% for option in variant.options %}
+            "{{ option.name }}": "{{ option.value }}"{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        },
+        "quantity_rule": {
+          "min": "{{ variant.quantity_rule.min }}",
+          "max": "{{ variant.quantity_rule.max }}",
+          "increment": "{{ variant.quantity_rule.increment }}",
+        },
+        "quantity_rule_sold_out": "{{ variant.quantity_rule_sold_out }}",
+        "product": {
+            "options": {
+            {% for option in variant.product.options_with_values %}
+              "{{ option.name }}": {
+                {% for value in option.values %}
+                    "available": "{{ value.available }}",
+                    "id": "{{ value.id }}",
+                    "name": "{{ value.name }}",
+                    "available": "{{ value.available }}",
+                    "selected": "{{ value.selected }}",
+                {% endfor %}
+              }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          },
+        }
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  }
 
+  console.log('product', window.product)
+
+</script>

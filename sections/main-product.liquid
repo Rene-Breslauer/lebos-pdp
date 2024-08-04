@@ -54,6 +54,7 @@
      
       <div class="col-span-4 md:col-span-5 md:col-start-8">
         <section
+          x-data
           id="ProductInfo-{{ section.id }}"
           class="flex flex-col gap-6"
         >
@@ -88,21 +89,29 @@
               {%- when 'vendor'-%}
                 <span class="py-1.5 px-2.5 border border-gray-200 rounded-sm w-fit uppercase">{{ product.vendor }}</span>
               {%- when 'price' -%}
-                <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+                <div id="price-{{ section.id }}" class="flex flex-col gap-2" role="status" {{ block.shopify_attributes }}>
                   {%- render 'price',
                     product: product,
                     use_variant: true,
                     show_badges: true,
                     price_class: 'price--large'
                   -%}
-                </div>
                 <div {{ block.shopify_attributes }}>
                   {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
-                  {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
+                  {% comment %} Klarna goes here {% endcomment %}
+                  <div class="w-full bg-gray-100 p-2.5 text-sm font-normal flex items-center justify-between">
+                    <div>
+                    <span>4 interest-free payments of $12.74.</span>
+                    <a href="#" class="text-brand underline">Learn more</a>
+                    </div>
+                    {% render 'icon', icon: 'klarna-logo', class: '!w-10' %}
+                  </div>
+                  {% comment %} {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
                     <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
                     {{ form | payment_terms }}
-                  {%- endform -%}
+                  {%- endform -%} {% endcomment %}
                 </div>
+              </div>
               
               {%- when 'custom_liquid' -%}
                 {{ block.settings.custom_liquid }}

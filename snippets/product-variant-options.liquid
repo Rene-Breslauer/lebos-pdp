@@ -69,8 +69,9 @@
     %}
   {%- else -%}
     <input
+
       type="radio"
-      id="{{ option.name }}-{{ option.index }}-{{ value }}"
+      id="{{ option.name }}-{{ value }}"
       name="options[{{ option.name | escape }}]"
       value="{{ value | escape }}"
       form="{{ product_form_id }}"
@@ -78,11 +79,10 @@
       {% if value.selected %}
         checked
       {% endif %}
-      {% if option_disabled %}
-        class="disabled"
-      {% endif %}
     >
-    <label for="{{ option.name }}-{{ option.index }}-{{ value }}" class="px-3.5 py-1.5 border border-gray-200 rounded-sm text-sm font-semibold cursor-pointer">
+    <label 
+    for="{{ option.name }}-{{ value }}" class="px-3.5 py-1.5 border border-gray-200 rounded-sm text-sm font-semibold cursor-pointer transition"
+    >
       {{ value -}}
     </label>
   {%- endif -%}

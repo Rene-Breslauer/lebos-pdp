@@ -16,6 +16,17 @@ const init = async () => {
   Alpine.plugin(ProductGallery)
   Alpine.plugin(StoreAvailability)
 
+  Alpine.store('variant', {})
+
+  Alpine.store('currency', {
+    formatMoney(price) {
+      return price.toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      });
+    }
+  })
+
 
   Alpine.start()
   window.Alpine = Alpine

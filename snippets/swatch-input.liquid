@@ -28,10 +28,11 @@
 <input
   type="{{ type | default: 'radio' }}"
   id="{{ name }}-{{ value }}-{{ id }}"
-  name="options[{{ name | split: '-2' | first }}]"
+  name="options[{{ name | split: '-' | first }}]"
   value="{{ value }}"
   form="{{ product_form_id }}"
   class="appearance-none absolute h-0 w-0 inset-0"
+  @click="renderOptions(event.target.value)"
   {% if checked %}
     checked
   {% endif %}

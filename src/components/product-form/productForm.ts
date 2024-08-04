@@ -3,16 +3,25 @@ import { getUrlWithVariant, ProductForm } from '@shopify/theme-product-form'
 export default (Alpine: any) => {
  Alpine.data(
    'productForm',
-   (productHandle: string, selectedVariant: number) => ({
+   (
+     productHandle: string,
+     selectedVariant: number,
+     available: boolean,
+     availability: string
+   ) => ({
      formElement: null as HTMLFormElement | null,
      variantIdInputDisabled: false,
      submitButton: null as HTMLButtonElement | null,
      submitButtonText: '',
      productHandle,
      selectedVariant,
+     available,
+     availability,
      productForm: null as ProductForm | null,
      quantity: 1,
      selectedOptions: {} as { [key: string]: string },
+     variant: {},
+     groupedVariants: {} as { [key: string]: any },
 
      init() {
        this.formElement = this.$el.querySelector('.form')
@@ -29,7 +38,13 @@ export default (Alpine: any) => {
          this.submitButtonText = 'Submit'
        }
 
-       fetch(`/products/${this.productHandle}.js`)
+       this.fetchProduct(this.productHandle)
+
+       this.updateVariant(this.selectedVariant)
+     },
+
+     fetchProduct(productHandle: string) {
+          fetch(`/products/${productHandle}.js`)
          .then(response => response.json())
          .then(productJSON => {
            this.productForm = new ProductForm(this.formElement, productJSON, {
@@ -37,16 +52,17 @@ export default (Alpine: any) => {
              onFormSubmit: this.onFormSubmit.bind(this)
            })
 
-           console.log('this.productForm', this.productForm)
            this.productOptions = this.productForm.optionInputs
          })
          .catch(error => {
            console.error('Error fetching product data:', error)
          })
-     },
+      },
 
      onOptionChange(event: any) {
        const variant = event.dataset.variant
+
+      //  this.renderOptions(event.target.value)
 
        window.dispatchEvent(
          new CustomEvent('option-changed', {
@@ -59,31 +75,136 @@ export default (Alpine: any) => {
 
        this.selectedVariant = variant.id
 
-       this.updateSelectedOption(event.target.name, event.target.value)
+       console.log('selected variant', this.selectedVariant)
+
+       this.updateSelectedOption(window.variant[variant.id].options)
+
+       this.updateVariant(this.selectedVariant)
 
        if (variant === null) {
          // The combination of selected options does not have a matching variant
+         this.available = false
+         this.availability = 'unavailable'
        } else if (variant && !variant.available) {
          // The combination of selected options has a matching variant but it is
          // currently unavailable
+         this.available = false
+         this.availability = 'sold_out'
        } else if (variant && variant.available) {
          // The combination of selected options has a matching variant and it is
          // available
+         this.available = true
+         this.availability = 'available'
        }
-
-        
      },
 
-     updateSelectedOption(optionName: string, value: string) {
-       let selectedOptions = this.$el.querySelectorAll(
-         '.selectedOption'
-       )
 
-       selectedOptions.forEach(option => {
-          if (option.dataset.optionName === optionName) {
-            option.textContent = value
-          }
-        })
+     renderOptions(optionValue: string) {
+      for (let i = 1; i <= 3; i++) {
+        // Adjust if more options exist
+        const optionName = `option${i}`
+        this.groupedVariants[optionName] = this.groupVariantsByOption(
+          optionValue, optionName, this.productForm.product.variants
+        )
+      }
+
+      Object.keys(this.groupedVariants).forEach(optionName => {
+        let fieldset = document.getElementById(optionName)
+        
+        if (fieldset && optionName !== 'option1') {
+          const optionContainer = fieldset.querySelector('div.variant-container')
+          optionContainer.innerHTML = '' // Clear existing options
+
+          Object.keys(this.groupedVariants[optionName]).forEach(optionValue => {
+
+            this.groupedVariants[optionName][optionValue].forEach(variant => {
+                const optionElement = document.createElement('div')
+                let fieldName = fieldset.dataset.name
+                let fieldForm = fieldset.dataset.form
+                optionElement.innerHTML = `
+                <input
+                  type="radio"
+                  id="${fieldName}-${variant[optionName]}"
+                  name="options[${fieldName}]"
+                  value="${variant[optionName]}"
+                  class="appearance-none h-0 w-0 absolute inset-0"
+                  form="${fieldForm}"
+                  ${variant.selected ? 'checked' : ''}
+                >
+                <label
+                  for="${fieldName}-${variant[optionName]}"
+                  class="px-3.5 py-1.5 border border-gray-200 rounded-sm text-sm font-semibold cursor-pointer transition"
+                >
+                  ${variant[optionName]}
+                </label>
+              `
+                optionContainer.appendChild(optionElement)
+            })
+          })
+        }
+      })
+      this.fetchProduct(this.productHandle)
+      console.log('this product form', this.productForm)
+
+    },
+
+    groupVariantsByOption(optionValue: string, optionName: string, variants: any) {
+     const variantsArray = Object.values(variants)
+
+     // Filter the array to include only variants where option1 matches optionName
+     const filteredVariants = variantsArray.filter(
+       variant => variant.option1 === optionValue
+     )
+     // Group the filtered variants into an array within one object
+      const groupedVariants = {}
+      filteredVariants.forEach(variant => {
+        const optionValue = variant[optionName]
+        if (!groupedVariants[optionValue]) {
+          groupedVariants[optionValue] = []
+        }
+        groupedVariants[optionValue].push(variant)
+      })
+      return groupedVariants
+
+      },
+
+     updateVariant(variantId: any) {
+       let variant = window.variant[variantId]
+
+       this.variant = {
+         id: variant.id,
+         price: Alpine.store('currency').formatMoney(variant.price),
+         compareAtPrice: Alpine.store('currency').formatMoney(
+           variant.compare_at_price
+         ),
+         available: variant.available,
+         quantityRuleSoldOut: variant.quantity_rule_sold_out,
+         showCompareAt: variant.price < variant.compare_at_price
+       }
+
+       Alpine.store('variant', this.variant)
+
+     },
+
+     updateSelectedOption(options: any) {
+
+       //  let selectedOptions = this.$el.querySelectorAll(
+       //    '.selectedOption'
+       //  )
+
+       //  console.log('selectedOptions', optionName, value, selectedOptions)
+
+       //  selectedOptions.forEach(option => {
+       //   console.log('option a',option)
+       //     if (option.dataset.optionName === optionName) {
+       //       option.textContent = value
+       //       console.log('option', option, option.dataset.optionName, option.textContent)
+       //     }
+       //   })
+
+       //   this.selectedOptions = selectedOptions
+
+       //   console.log('selectedOptions', this.selectedOptions)
      },
 
      onQuantityChange(event: any) {

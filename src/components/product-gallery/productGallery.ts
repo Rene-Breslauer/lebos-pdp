@@ -23,7 +23,7 @@ export default (Alpine: any) => {
           breakpoints: {
             767: {
               direction: 'vertical',
-              slidesPerView: 5,
+              slidesPerView: 5
             }
           },
           pagination: {
@@ -73,7 +73,7 @@ export default (Alpine: any) => {
             this.updateSlider()
             this.$refs.verticalSlider.style.height = 'auto'
           } else {
-             this.updateVerticalSliderHeight()
+            this.updateVerticalSliderHeight()
           }
         })
       },
@@ -81,7 +81,7 @@ export default (Alpine: any) => {
       updateGallery(variant: object) {
         this.newVariantImages = []
         this.swiper.destroy()
-       
+
         let swiperWrapper = this.$el.querySelector('.swiper-wrapper')
         swiperWrapper.innerHTML = ''
 
@@ -95,8 +95,8 @@ export default (Alpine: any) => {
         this.newVariantImages.forEach((image: any) => {
           let slide = document.createElement('div')
           slide.classList.add('swiper-slide', 'cursor-pointer')
-          slide.addEventListener('click', (event) => {
-            this.updateImage(event,image)        
+          slide.addEventListener('click', event => {
+            this.updateImage(event, image)
           })
           let img = document.createElement('img')
           img.src = image
@@ -106,25 +106,31 @@ export default (Alpine: any) => {
         })
 
         this.swiper = new Swiper('.swiper', this.config)
+
       },
 
       updateImage(event: object, mediaId: string) {
+        console.log('mediaid', mediaId, 'event', event.target)
         this.$refs.imageTrack.src = mediaId
 
         let slides = document.querySelectorAll('.swiper-slide')
 
         slides.forEach(slide => {
-
-           slide === event?.target?.parentElement || slide.querySelector('img') === event?.target
-             ? slide.classList.add('border', 'border-gray-800')
-             : slide.classList.remove('border', 'border-gray-800')
-         })
+          slide === event?.target?.parentElement ||
+          slide.querySelector('img') === event?.target
+            ? slide.classList.add('border', 'border-gray-800')
+            : slide.classList.remove('border', 'border-gray-800')
+        })
       },
 
+      updateSlider() {
+        // this.swiper.changeDirection('horizontal', true)
+      },
       updateVerticalSliderHeight() {
         let verticalSlider = this.$el
         let sliderHeight = this.$refs.imageTrack.offsetHeight
         verticalSlider.style.height = sliderHeight + 'px'
+        //  this.swiper.changeDirection('vertical', true)
       }
     })
   )
