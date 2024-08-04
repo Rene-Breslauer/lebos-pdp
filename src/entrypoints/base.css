@@ -257,7 +257,7 @@ input[name='options[Color]']:checked+label {
 }
 
 .tabs label {
-  @apply order-1 block py-1 px-2 cursor-pointer transition border border-gray-200;
+  @apply order-1 cursor-pointer transition border border-gray-200;
 }
 
 .tabs .tab {
@@ -283,11 +283,11 @@ input[name='options[Color]']:checked+label {
     order: initial;
   }
 
-  .tabs label {
+  /* .tabs label {
     width: 100%;
     margin-right: 0;
     margin-top: 0.2rem;
-  }
+  } */
 }
 
 .swiper-pagination-bullet {
@@ -298,15 +298,15 @@ input[name='options[Color]']:checked+label {
   @apply !bg-brand border-brand;
 }
 
-    /* Hide the spinner on Chrome, Safari, Edge, Opera */
-    input[type="number"].quantity::-webkit-inner-spin-button,
-    input[type="number"].quantity::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+/* Hide the spinner on Chrome, Safari, Edge, Opera */
+input[type="number"].quantity::-webkit-inner-spin-button,
+input[type="number"].quantity::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
   
-    /* Hide the spinner on Firefox */
-    input[type="number"].quantity {
-      -moz-appearance: textfield;
-    }
+/* Hide the spinner on Firefox */
+input[type="number"].quantity {
+  -moz-appearance: textfield;
+}
   

@@ -11,29 +11,39 @@
 >
  <div class="container pt-5">
     <div class="grid grid-cols-4 md:grid-cols-12 col-start-1">
-      <div class="grid grid-cols-1 col-span-4 md:col-span-6 md:gap-12">
+      <div class="grid grid-cols-1 col-span-4 md:col-span-6 md:gap-12 h-fit">
         {% render 'product-media-gallery', variant_images: variant_images %}
          
          {%- for block in section.blocks -%}
           {%- case block.type -%}
           {%- when 'description' -%}
             {%- if product.description != blank -%}
-              <div class="tabs">
-                <input type="radio" name="tabs" id="tabone" checked="checked">
-                <label for="tabone" class="w-1/2 py-3 px-5 flex justify-center items-center">
-                {% render 'icon', icon: 'info-circle', class: '!h-2.5 !w-2.5' %}
-                Description</label>
-                <div class="tab">
-                 <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-                  {{ product.description }}
-                </div>
-                </div>
-                <input type="radio" name="tabs" id="tabtwo">
-                <label for="tabtwo" class="w-1/2 py-3 px-5 flex justify-center items-center">
-                {% render 'icon', icon: 'list', class: '!h-2.5 !w-2.5' %}
-                Specifications</label>
-                <div class="tab">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <div class="flex items-start w-full">
+                <div class="tabs w-full">
+                  <input type="radio" name="tabs" id="tabone" checked="checked">
+                  <label for="tabone" class="h-11 w-1/2 py-3 px-5 flex justify-center items-center gap-3 uppercase font-bold">
+                  {% render 'icon', icon: 'info-circle', class: '!h-4 !w-4' %}
+                  <span>
+                    Description
+                  </span>
+                  </label>
+                  <div class="tab">
+                  <div class="product__description rte quick-add-hidden pt-9" {{ block.shopify_attributes }}>
+                    {{ product.description }}
+                  </div>
+                  </div>
+                  <input type="radio" name="tabs" id="tabtwo">
+                  <label for="tabtwo" class="h-11 w-1/2 py-3 px-5 flex justify-center items-center gap-3 uppercase font-bold">
+                  {% render 'icon', icon: 'list', class: '!h-4 !w-4' %}
+                  <span>
+                    Specifications
+                  </span>
+                  </label>
+                  <div class="tab">
+                    <div class="product__description rte quick-add-hidden pt-9" {{ block.shopify_attributes }}>
+                      {{ product.description |  truncate: 100 }}
+                    </div>                
+                  </div>
                 </div>
               </div>
               {%- endif -%}

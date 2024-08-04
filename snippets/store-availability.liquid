@@ -1,17 +1,17 @@
 
-<div x-data="storeAvailability({{ product.selected_or_first_available_variant.id }})">
+<div class="pick-up-container" x-data="storeAvailability({{ product.selected_or_first_available_variant.id }})">
   <div class="bg-gray-100 p-3.5 flex items-center gap-2.5">
-    {% render 'icon', icon: 'checkmark-circle', class: '!h-5 !w-5' %}
+    {% render 'icon', icon: 'checkmark-circle', class: '!h-4 !w-4' %}
     <span class="uppercase font-bold">Available to pick up in the following stores</span>
   </div>
-  <template x-for="location in pickupLocations" :key="location.id">
-    <div class="flex gap-2 w-full text-xs p-3.5 border-t border-l border-r border-gray-200"
-    :class="{'border-b': index !== pickupLocations.length - 1}"
+  <template x-for="(location, index) in pickupLocations" :key="location.id">
+    <div class="pick-up flex gap-2 w-full text-xs p-3.5 border-t border-l border-r border-gray-200"
+         :class="{'border-b': index == pickupLocations.length - 1}"
     >
       <div class="flex flex-col gap-2 w-full">
         <span class="uppercase text-xs font-bold" x-text="location.name"></span>
-        <address class="text-xs">
-          <span class="whitespace-nowrap" x-html="location.address"></span>
+        <address class="text-xs not-italic">
+          <span x-html="location.address"></span>
           <span x-text="location.phone"></span>
         </address>
         </div>
