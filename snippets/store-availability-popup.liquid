@@ -1,6 +1,7 @@
 <template x-teleport="body">
-<div x-show="locationModal" class="fixed inset-0 w-full h-full flex justify-center items-center">
-<dialog @click.away="locationModal = false" class="flex flex-col bg-white w-full max-w-[460px] mx-auto z-10 shadow-xl">
+<div x-show="locationModal" 
+class="fixed z-[10] inset-0 w-full h-full flex justify-center items-center bg-[rgba(0,0,0,0.5)]">
+<dialog @click.away="locationModal = false" class="store-availability flex flex-col bg-white w-full max-w-[460px] mx-auto z-10 shadow-xl">
 <div class="border-b border-gray-200 ">
   <div class="flex justify-between items-center w-full p-3.5">
     <span class="font-bold">STORE DETAILS</span>
@@ -10,7 +11,7 @@
   </div>
 </div>
 <div class="flex flex-col gap-2 px-3.5 pt-3.5 py-5">
-<div class="flex justify-between items-center pb-2">
+<div class="flex justify-between items-center pb-1">
   <span class="text-sm font-bold uppercase" x-text="popupLocation?.name"></span>
   <span class="text-xs">Work time today:</span>
 </div>

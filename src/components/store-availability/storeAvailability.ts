@@ -15,6 +15,10 @@ export default (Alpine: any) => {
           this.updateStores(event.detail.variant)
         })
         this.updateStores({ id: this.defaultVariantId })
+
+        this.$watch('locationModal', value => {
+          document.querySelector('body').style.overflowY = value ? 'hidden' : 'auto';
+        })
       },
 
       async fetchLocationData(variantId: number) {
