@@ -74,7 +74,7 @@
       name="options[{{ option.name | escape }}]"
       value="{{ value | escape }}"
       form="{{ product_form_id }}"
-      class="appearance-none h-0 w-0 absolute inset-0 cursor-pointer"
+      class="appearance-none h-0 w-0 absolute inset-0 cursor-pointer hidden"
       {% if value.selected %}
         checked
       {% endif %}

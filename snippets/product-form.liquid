@@ -27,13 +27,14 @@
     {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
     <div class="flex gap-2">
         <div class="quantity flex w-fit border border-gray-200 rounded-sm max-w-[132px]" data-url="{{ product.url }}" data-section="{{ section.id }}">
-          <button class="quantity__button py-5 px-4 flex items-center justify-center transition hover:bg-gray-100" name="minus" type="button" @click="quantity++">
+          <button @click="quantity > 1 ? quantity-- : ''" class="quantity__button py-5 px-4 flex items-center justify-center transition hover:bg-gray-100" name="minus" type="button" @click="quantity++">
             {% render 'icon', icon: 'minus', class: '!h-2.5 !w-2.5' %}
           </button>
           <input
           class="quantity text-base text-center font-semibold w-full"
           type="number"
           name="quantity"
+          x-model="quantity"
           id="Quantity-{{ section.id }}"
           data-cart-quantity="{{ cart_qty }}"
           data-min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
@@ -46,7 +47,7 @@
           value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
           form="{{ product_form_id }}"
           >
-          <button class="quantity__button py-5 px-4 flex items-center justify-center transition hover:bg-gray-100" name="plus" type="button">
+          <button @click="quantity++" class="quantity__button py-5 px-4 flex items-center justify-center transition hover:bg-gray-100" name="plus" type="button">
             {% render 'icon', icon: 'plus', class: '!h-2.5 !w-2.5' %}
           </button>
             </div>

@@ -75,10 +75,6 @@ export default (Alpine: any) => {
 
        this.selectedVariant = variant.id
 
-       console.log('selected variant', this.selectedVariant)
-
-       this.updateSelectedOption(window.variant[variant.id].options)
-
        this.updateVariant(this.selectedVariant)
 
        if (variant === null) {
@@ -100,6 +96,7 @@ export default (Alpine: any) => {
 
 
      renderOptions(optionValue: string) {
+
       for (let i = 1; i <= 3; i++) {
         // Adjust if more options exist
         const optionName = `option${i}`
@@ -113,7 +110,7 @@ export default (Alpine: any) => {
         
         if (fieldset && optionName !== 'option1') {
           const optionContainer = fieldset.querySelector('div.variant-container')
-          optionContainer.innerHTML = '' // Clear existing options
+          optionContainer.innerHTML = '' 
 
           Object.keys(this.groupedVariants[optionName]).forEach(optionValue => {
 
@@ -122,15 +119,16 @@ export default (Alpine: any) => {
                 optionElement.classList.add('flex')
                 let fieldName = fieldset.dataset.name
                 let fieldForm = fieldset.dataset.form
+                let variantId = variant.id
                 optionElement.innerHTML = `
                 <input
                   type="radio"
                   id="${fieldName}-${variant[optionName]}"
                   name="options[${fieldName}]"
                   value="${variant[optionName]}"
-                  class="appearance-none h-0 w-0 absolute inset-0"
+                  class="appearance-none h-0 w-0 absolute inset-0 hidden"
                   form="${fieldForm}"
-                  ${variant.selected ? 'checked' : ''}
+                  data-variant="${variantId}"
                 >
                 <label
                   for="${fieldName}-${variant[optionName]}"
@@ -140,13 +138,21 @@ export default (Alpine: any) => {
                   ${variant[optionName]}
                 </label>
               `
-                optionContainer.appendChild(optionElement)
+
+              setTimeout(() => {
+                if (variantId === this.selectedVariant) {
+                  optionElement.querySelector('input').checked = true
+                }
+              },200)
+
+              optionContainer.appendChild(optionElement)
+
+                
             })
           })
         }
       })
       this.fetchProduct(this.productHandle)
-      console.log('this product form', this.productForm)
 
     },
 
@@ -188,26 +194,10 @@ export default (Alpine: any) => {
 
      },
 
-     updateSelectedOption(options: any) {
-
-       //  let selectedOptions = this.$el.querySelectorAll(
-       //    '.selectedOption'
-       //  )
-
-       //  console.log('selectedOptions', optionName, value, selectedOptions)
-
-       //  selectedOptions.forEach(option => {
-       //   console.log('option a',option)
-       //     if (option.dataset.optionName === optionName) {
-       //       option.textContent = value
-       //       console.log('option', option, option.dataset.optionName, option.textContent)
-       //     }
-       //   })
-
-       //   this.selectedOptions = selectedOptions
-
-       //   console.log('selectedOptions', this.selectedOptions)
-     },
+     getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    },
 
      onQuantityChange(event: any) {
        this.quantity = event.target.value
