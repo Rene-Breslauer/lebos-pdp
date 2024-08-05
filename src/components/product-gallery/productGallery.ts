@@ -118,8 +118,8 @@ export default (Alpine: any) => {
         slides.forEach(slide => {
           slide === event?.target?.parentElement ||
           slide.querySelector('img') === event?.target
-            ? slide.classList.add('border', 'border-gray-800')
-            : slide.classList.remove('border', 'border-gray-800')
+            ? slide.classList.add('md:border', 'md:border-gray-800')
+            : slide.classList.remove('md:border', 'md:border-gray-800')
         })
       },
 

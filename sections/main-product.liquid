@@ -14,8 +14,7 @@
       <div class="grid grid-cols-1 col-span-4 gap-2 md:col-span-6 md:gap-12 h-fit">
 
          {% comment %} Mobile product info {% endcomment %}
-
-          <div class="flex flex-col gap-6 md:hidden">
+          <div class="flex flex-col mb-2 md:hidden">
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}
@@ -28,22 +27,24 @@
                   {{- block.settings.text -}}
                 </p>
               {%- when 'title' -%}
-                <div class="flex flex-col gap-2">
-                <p
-                  class="text-sm text-gray-700 font-normal"
-                  id="Sku-{{ section.id }}"
-                  role="status"
-                  {{ block.shopify_attributes }}
-                >
-                  <span class="font-semibold">{{ 'products.product.sku' | t }}:</span>
-                  {{- product.selected_or_first_available_variant.sku -}}
-                </p>
+                <div class="flex flex-col gap-2 mt-5 mb-2">
                 <div class="product__title" {{ block.shopify_attributes }}>
                   <h1 class="text-5xl">{{ product.title | escape }}</h1>
                 </div>
                 </div>
               {%- when 'vendor'-%}
-                <span class="py-1.5 px-2.5 border border-gray-200 rounded-sm w-fit uppercase">{{ product.vendor }}</span>
+                <div class="flex items-center justify-between">
+                  <span class="py-1.5 px-2.5 border border-gray-200 rounded-sm w-fit uppercase">{{ product.vendor }}</span>
+                  <p
+                    class="text-sm text-gray-700 font-normal"
+                    id="Sku-{{ section.id }}"
+                    role="status"
+                    {{ block.shopify_attributes }}
+                  >
+                    <span class="font-semibold">{{ 'products.product.sku' | t }}:</span>
+                    {{- product.selected_or_first_available_variant.sku -}}
+                  </p>
+                </div>
               {%- when 'price' -%}
                 <div id="price-{{ section.id }}" class="flex flex-col gap-2" role="status" {{ block.shopify_attributes }}>
                   {%- render 'price',
@@ -67,7 +68,6 @@
               {%- endcase -%}
             {%- endfor -%}
             </div>
-
           {% comment %} Mobile product info end {% endcomment %}
 
         {% render 'product-media-gallery', variant_images: variant_images %}

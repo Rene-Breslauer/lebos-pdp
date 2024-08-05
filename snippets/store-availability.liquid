@@ -1,5 +1,5 @@
 
-<div class="pick-up-container order-3" x-data="storeAvailability({{ product.selected_or_first_available_variant.id }}, '{{ product.handle }}')">
+<div class="pick-up-container order-3 mb-6 md:mb-0" x-data="storeAvailability({{ product.selected_or_first_available_variant.id }}, '{{ product.handle }}')">
   <div class="bg-gray-100 p-3.5 flex items-center gap-2.5">
     {% render 'icon', icon: 'checkmark-circle', class: '!h-4 !w-4' %}
     <span class="uppercase font-bold">Available to pick up in the following stores</span>
