@@ -21,7 +21,7 @@ class="fixed z-[10] inset-0 w-full h-full flex justify-center items-center bg-[r
     Address</span>
   <div>
     <span class="text-xs" x-html="popupLocation?.addressPopup"></span><br>
-    <a :href="'tel'+popupLocation?.phone" class="text-xs text-brand underline" x-text="popupLocation?.phone"></a>
+    <a :href="'tel:'+popupLocation?.phone" class="text-xs text-brand underline" x-text="popupLocation?.phone"></a>
   </div>
 </div>
 <div class="flex flex-col gap-2 p-3.5 bg-gray-100">

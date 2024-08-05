@@ -310,3 +310,31 @@ input[type="number"].quantity {
   -moz-appearance: textfield;
 }
   
+.product__description.rte h3 {
+  @apply font-heading text-3xl font-bold mb-5;
+}
+
+.product__description.rte h5 {
+  @apply text-xl uppercase mb-2;
+}
+
+.product__description.rte ul {
+  @apply list-disc pl-5;
+}
+
+.product__description.rte ul li {
+  @apply text-sm font-body;
+}
+
+.product__description.rte ul li strong,
+.product__description.rte ul li span strong {
+  @apply font-semibold uppercase;
+}
+
+.product__description.rte p {
+  @apply text-sm font-body;
+}
+
+.product__description.rte p strong {
+  @apply font-semibold uppercase;
+}

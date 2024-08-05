@@ -9,7 +9,7 @@
     data-zoom-on-hover
   {% endif %}
 >
- <div class="container pt-5">
+ <div class="container pt-5 pb-20">
     <div class="grid grid-cols-4 md:grid-cols-12 col-start-1">
       <div class="grid grid-cols-1 col-span-4 md:col-span-6 md:gap-12 h-fit">
         {% render 'product-media-gallery', variant_images: variant_images %}
@@ -28,7 +28,7 @@
                   </span>
                   </label>
                   <div class="tab">
-                  <div class="product__description rte quick-add-hidden pt-9 block" {{ block.shopify_attributes }}>
+                  <div class="product__description rte quick-add-hidden pt-9 block border-b border-gray-800 pb-10" {{ block.shopify_attributes }}>
                     {{ product.description }}
                   </div>
                   </div>
@@ -40,8 +40,18 @@
                   </span>
                   </label>
                   <div class="tab">
-                    <div class="product__description rte quick-add-hidden pt-9 block" {{ block.shopify_attributes }}>
-                      {% comment %} {{ product.description |  truncate: 100 }} {% endcomment %}
+                    <div class="product__description rte quick-add-hidden pt-9 block border-b border-gray-800 pb-10" {{ block.shopify_attributes }}>
+                    <h3>Specifications</h3>
+                     <ul class="list-none flex flex-col gap-2 !pl-0">
+                      {% for metafield in product.selected_or_first_available_variant.metafields.specification %}
+                        {% assign key = metafield[0] | replace: '_',' ' | upcase %}
+                        {% assign name = metafield[1] %}
+                          <li class="bg-gray-100 p-3.5 flex justify-between items-center text-sm">
+                            <span class="font-bold">{{ key }}</span>
+                            <span>{{ name }}</span>
+                          </li>
+                      {% endfor %}
+                    </ul>
                     </div>                
                   </div>
                 </div>
@@ -106,10 +116,6 @@
                     </div>
                     {% render 'icon', icon: 'klarna-logo', class: '!w-10' %}
                   </div>
-                  {% comment %} {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
-                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                    {{ form | payment_terms }}
-                  {%- endform -%} {% endcomment %}
                 </div>
               </div>
               
