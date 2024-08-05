@@ -1,24 +1,39 @@
 <template x-teleport="body">
 <div x-show="locationModal" class="fixed inset-0 w-full h-full flex justify-center items-center">
-<dialog @click.away="locationModal = false" class="flex flex-col gap-2 p-3.5 bg-white w-full max-w-[460px] mx-auto z-10 shadow-xl">
-<div class="pb-3.5 px-3.5">
-  <span class="font-bold">STORE DETAILS</span>
+<dialog @click.away="locationModal = false" class="flex flex-col bg-white w-full max-w-[460px] mx-auto z-10 shadow-xl">
+<div class="border-b border-gray-200 ">
+  <div class="flex justify-between items-center w-full p-3.5">
+    <span class="font-bold">STORE DETAILS</span>
+    <span class="cursor-pointer" @click="locationModal = false">
+    {% render 'icon', icon: 'cross', class: '!h-2.5 !w-2.5' %}
+    </span>
+  </div>
 </div>
-<div class="flex justify-between items-center p-3.5 border-t border-gray-200">
+<div class="flex flex-col gap-2 px-3.5 pt-3.5 py-5">
+<div class="flex justify-between items-center pb-2">
   <span class="text-sm font-bold uppercase" x-text="popupLocation?.name"></span>
-  <span class="uppercase">Work time today:</span>
+  <span class="text-xs">Work time today:</span>
 </div>
 <div class="flex flex-col gap-2 p-3.5 bg-gray-100">
-  <span class="font-bold">Address</span>
-  <span x-html="popupLocation?.address"></span>
-  <span class="text-brand" x-text="popupLocation?.phone"></span>
+  <span class="font-bold uppercase text-xs flex items-center gap-2">
+    {% render 'icon', icon: 'pin', class: '!h-5 !w-5' %}
+    Address</span>
+  <div>
+    <span class="text-xs" x-html="popupLocation?.addressPopup"></span><br>
+    <a :href="'tel'+popupLocation?.phone" class="text-xs text-brand underline" x-text="popupLocation?.phone"></a>
+  </div>
 </div>
 <div class="flex flex-col gap-2 p-3.5 bg-gray-100">
-  <span class="font-bold">Address</span>
-  <span x-html="popupLocation?.address"></span>
-  <span class="text-brand" x-text="popupLocation?.phone"></span>
-</div>
+ <span class="font-bold uppercase text-xs flex items-center gap-2">
+  {% render 'icon', icon: 'clock', class: '!h-5 !w-5' %}
+  Working Hours:</span>
+ <template x-for="(hours, days) in popupLocation?.formattedHours" :key="days">
+   <div class="px-3.5 py-1.5 bg-white flex items-center justify-between uppercase text-xs" x-html="hours">
+  </div>
+ </template>
+ </div>
 <span class="text-brand text-xs">For the health and safety of our clients and associates, store hours may vary. Call your local store for operating hours.</span>
+</div>
 </dialog>
 </div>
 </template>

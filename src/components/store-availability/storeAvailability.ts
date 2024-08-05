@@ -36,6 +36,11 @@ export default (Alpine: any) => {
                             address2
                             city
                             provinceCode
+                            zip
+                            phone
+                          }
+                          metafield(namespace:"store",key:"operating_hours") {
+                            value
                           }
                         }
                       }
@@ -45,36 +50,44 @@ export default (Alpine: any) => {
               }
             }
           }`,
-          variables: { "handle": `${productHandle}`, "id": `${this.defaultVariantId}` }
-        });
+          variables: {
+            handle: `${productHandle}`,
+            id: `${this.defaultVariantId}`
+          }
+        })
 
-        const myHeaders = new Headers();
-        myHeaders.append("X-Shopify-Storefront-Access-Token", "2af480c4bcfab71479b314fff1b12f60");
-        myHeaders.append("Content-Type", "application/json");
+        const myHeaders = new Headers()
+        myHeaders.append(
+          'X-Shopify-Storefront-Access-Token',
+          '2af480c4bcfab71479b314fff1b12f60'
+        )
+        myHeaders.append('Content-Type', 'application/json')
 
         const requestOptions = {
-          method: "POST",
+          method: 'POST',
           headers: myHeaders,
           body: graphql,
-          redirect: "follow"
-        };
+          redirect: 'follow'
+        }
 
-         try {
-           const response = await fetch(
-             'https://lebos-test.myshopify.com/api/2024-10/graphql.json',
-             requestOptions
-           )
-           const result = await response.json()
+        try {
+          const response = await fetch(
+            'https://lebos-test.myshopify.com/api/2024-10/graphql.json',
+            requestOptions
+          )
+          const result = await response.json()
 
-           const variants = result.data.product.variants.nodes
+          console.log('result', result)
 
-           const targetVariant = variants.find(
-             variant =>
-               variant.id === `gid://shopify/ProductVariant/${variantId}`
-           )
+          const variants = result.data.product.variants.nodes
 
-           if (targetVariant) {
-             // Reduce the storeAvailability to an object with store location names as keys
+          const targetVariant = variants.find(
+            variant =>
+              variant.id === `gid://shopify/ProductVariant/${variantId}`
+          )
+
+          if (targetVariant) {
+            // Reduce the storeAvailability to an object with store location names as keys
             const storeAvailability =
               targetVariant.storeAvailability.edges.reduce((acc, edge) => {
                 const locationName = edge.node.location.name
@@ -87,28 +100,55 @@ export default (Alpine: any) => {
               ([key, value]) => ({
                 name: key,
                 ...value,
-                address: `${value.location.address.address1}, ${value.location.address.city}, ${value.location.address.provinceCode}`,
-                pickUpTime: value.pickUpTime
+                address: `${value?.location?.address?.address1}, ${value?.location?.address?.city}, ${value?.location?.address?.provinceCode} ${value?.location?.address?.zip}`,
+                addressPopup: `${value?.location?.address?.address1}<br>${value?.location?.address?.city}, ${value?.location?.address?.provinceCode} ${value?.location?.address?.zip}`,
+                phone: value?.location?.address?.phone,
+                pickUpTime: value?.pickUpTime,
+                formattedHours: this.formatHours(
+                  value?.location?.metafield?.value
+                )
               })
             )
 
-           } else {
-             console.log('Variant not found')
-           }
-         } catch (error) {
-           console.error(error)
-         }
+            console.log(
+              'pickupLocations hours',
+              this.pickupLocations.formatHours
+            )
+          } else {
+            console.log('Variant not found')
+          }
+        } catch (error) {
+          console.error(error)
+        }
       },
-
 
       updateStores(variant: object) {
         this.fetchLocationData(variant.id)
       },
 
-      formatAddress(address: string) {
-        let addressParts = address.split('<br>')
-        addressParts.pop()
-        return addressParts.join(' ')
+      formatHours(hours) {
+        const parsedHours = JSON.parse(hours)
+        const operatingHours = parsedHours?.operating_hours?.regular_hours
+
+        if (!operatingHours) {
+          return ['No operating hours available']
+        }
+
+        const formattedHoursArray = operatingHours.map(
+          hour =>
+            `<span>${hour.days}</span> <span>${this.parseTime(
+              hour.open
+            )} - ${this.parseTime(hour.close)}</span>`
+        )
+
+        return formattedHoursArray
+      },
+
+      parseTime(time: string) {
+        const [hour, minute] = time.split(':').map(Number)
+        const ampm = hour >= 12 ? 'PM' : 'AM'
+        const adjustedHour = hour % 12 || 12 // Convert 0 to 12 for midnight
+        return `${adjustedHour}:${minute.toString().padStart(2, '0')} ${ampm}`
       },
 
       renderPopup(location: object) {
@@ -116,7 +156,7 @@ export default (Alpine: any) => {
         this.locationModal = true
       },
 
-      
+
     })
   )
 }
