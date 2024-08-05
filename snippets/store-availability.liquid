@@ -1,10 +1,10 @@
 
-<div class="pick-up-container" x-data="storeAvailability({{ product.selected_or_first_available_variant.id }})">
+<div class="pick-up-container" x-data="storeAvailability({{ product.selected_or_first_available_variant.id }}, '{{ product.handle }}')">
   <div class="bg-gray-100 p-3.5 flex items-center gap-2.5">
     {% render 'icon', icon: 'checkmark-circle', class: '!h-4 !w-4' %}
     <span class="uppercase font-bold">Available to pick up in the following stores</span>
   </div>
-  <template x-for="(location, index) in pickupLocations" :key="location.id">
+  <template x-for="(location, index) in pickupLocations" :key="index">
     <div class="pick-up flex gap-2 w-full text-xs p-3.5 border-t border-l border-r border-gray-200"
          :class="{'border-b': index == pickupLocations.length - 1}"
     >
@@ -24,7 +24,6 @@
 </div>
 
 <script>
-
    window.storeAvailabilities = {
     {% for variant in product.variants %}
       "{{ variant.id }}": {

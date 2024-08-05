@@ -97,6 +97,10 @@ export default (Alpine: any) => {
 
      renderOptions(optionValue: string) {
 
+      let checkedIndex = this.captureCheckedIndex()
+
+      console.log('checkedIndex', checkedIndex)
+
       for (let i = 1; i <= 3; i++) {
         // Adjust if more options exist
         const optionName = `option${i}`
@@ -109,51 +113,61 @@ export default (Alpine: any) => {
         let fieldset = document.getElementById(optionName)
         
         if (fieldset && optionName !== 'option1') {
-          const optionContainer = fieldset.querySelector('div.variant-container')
-          optionContainer.innerHTML = '' 
+          const optionContainer = fieldset.querySelectorAll('div.variant-container')
+          optionContainer.forEach(optionContainer => {
+            optionContainer.innerHTML = ''
 
-          Object.keys(this.groupedVariants[optionName]).forEach(optionValue => {
+            Object.keys(this.groupedVariants[optionName]).forEach(optionValue => {
 
-            this.groupedVariants[optionName][optionValue].forEach(variant => {
-                const optionElement = document.createElement('div')
-                optionElement.classList.add('flex')
-                let fieldName = fieldset.dataset.name
-                let fieldForm = fieldset.dataset.form
-                let variantId = variant.id
-                optionElement.innerHTML = `
-                <input
-                  type="radio"
-                  id="${fieldName}-${variant[optionName]}"
-                  name="options[${fieldName}]"
-                  value="${variant[optionName]}"
-                  class="appearance-none h-0 w-0 absolute inset-0 hidden"
-                  form="${fieldForm}"
-                  data-variant="${variantId}"
-                >
-                <label
-                  for="${fieldName}-${variant[optionName]}"
-                  class="px-3.5 py-1.5 border border-gray-200 rounded-sm text-sm font-semibold cursor-pointer transition"
-                  :class="${variant.available} ? '' : 'cursor-not-allowed bg-gray-200 line-through text-gray-700'"
-                >
-                  ${variant[optionName]}
-                </label>
-              `
+              this.groupedVariants[optionName][optionValue].forEach(variant => {
+                  const optionElement = document.createElement('div')
+                  optionElement.classList.add('flex')
+                  let fieldName = fieldset.dataset.name
+                  let fieldForm = fieldset.dataset.form
+                  let variantId = variant.id
+                  optionElement.innerHTML = `
+                  <input
+                    type="radio"
+                    id="${fieldName}-${variant[optionName]}"
+                    name="options[${fieldName}]"
+                    value="${variant[optionName]}"
+                    class="appearance-none h-0 w-0 absolute inset-0 hidden"
+                    form="${fieldForm}"
+                    data-variant="${variantId}"
+                  >
+                  <label
+                    for="${fieldName}-${variant[optionName]}"
+                    class="px-3.5 py-1.5 border border-gray-200 rounded-sm text-sm font-semibold cursor-pointer transition"
+                    :class="${variant.available} ? '' : 'cursor-not-allowed bg-gray-200 line-through text-gray-700'"
+                  >
+                    ${variant[optionName]}
+                  </label>
+                `
 
-              setTimeout(() => {
-                if (variantId === this.selectedVariant) {
-                  optionElement.querySelector('input').checked = true
-                }
-              },200)
+                optionContainer.appendChild(optionElement)
 
-              optionContainer.appendChild(optionElement)
-
-                
+                  
+              })
             })
           })
         }
       })
       this.fetchProduct(this.productHandle)
 
+    },
+
+    captureCheckedIndex() {
+      // let checkedIndex = 0
+      // for (let i = 1; i <= 3; i++) {
+      //   const optionName = `option${i}`
+      //   const fieldset = document.getElementById(optionName)
+      //   const optionContainer = fieldset.querySelector('div.variant-container')
+      //   const checked = optionContainer.querySelector('input:checked')
+      //   if (checked) {
+      //     checkedIndex = i
+      //   }
+      // }
+      // return checkedIndex
     },
 
     groupVariantsByOption(optionValue: string, optionName: string, variants: any) {
