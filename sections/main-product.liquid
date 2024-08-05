@@ -11,65 +11,11 @@
 >
  <div class="container pt-5 pb-20">
     <div class="grid grid-cols-4 md:grid-cols-12 col-start-1">
-      <div class="grid grid-cols-1 col-span-4 md:col-span-6 md:gap-12 h-fit">
-        {% render 'product-media-gallery', variant_images: variant_images %}
-         
-         {%- for block in section.blocks -%}
-          {%- case block.type -%}
-          {%- when 'description' -%}
-            {%- if product.description != blank -%}
-              <div class="flex items-start w-full">
-                <div class="tabs w-full">
-                  <input type="radio" name="tabs" id="tabone" checked="checked">
-                  <label for="tabone" class="h-11 w-1/2 py-3 px-5 flex justify-center items-center gap-3 uppercase font-bold">
-                  {% render 'icon', icon: 'info-circle', class: '!h-4 !w-4' %}
-                  <span>
-                    Description
-                  </span>
-                  </label>
-                  <div class="tab">
-                  <div class="product__description rte quick-add-hidden pt-9 block border-b border-gray-800 pb-10" {{ block.shopify_attributes }}>
-                    {{ product.description }}
-                  </div>
-                  </div>
-                  <input type="radio" name="tabs" id="tabtwo">
-                  <label for="tabtwo" class="h-11 w-1/2 py-3 px-5 flex justify-center items-center gap-3 uppercase font-bold">
-                  {% render 'icon', icon: 'list', class: '!h-4 !w-4' %}
-                  <span>
-                    Specifications
-                  </span>
-                  </label>
-                  <div class="tab">
-                    <div class="product__description rte quick-add-hidden pt-9 block border-b border-gray-800 pb-10" {{ block.shopify_attributes }}>
-                    <h3>Specifications</h3>
-                     <ul class="list-none flex flex-col gap-2 !pl-0">
-                      {% for metafield in product.selected_or_first_available_variant.metafields.specification %}
-                        {% assign key = metafield[0] | replace: '_',' ' | upcase %}
-                        {% assign name = metafield[1] %}
-                          <li class="bg-gray-100 p-3.5 flex justify-between items-center text-sm">
-                            <span class="font-bold">{{ key }}</span>
-                            <span>{{ name }}</span>
-                          </li>
-                      {% endfor %}
-                    </ul>
-                    </div>                
-                  </div>
-                </div>
-              </div>
-              {%- endif -%}
-          {%- endcase -%}
-        {%- endfor -%}
-      
-      </div>
-     
-      <div class="col-span-4 md:col-span-5 md:col-start-8">
-        <section
-          x-data
-          id="ProductInfo-{{ section.id }}"
-          class="flex flex-col gap-6"
-        >
-          {%- assign product_form_id = 'product-form-' | append: section.id -%}
-      
+      <div class="grid grid-cols-1 col-span-4 gap-2 md:col-span-6 md:gap-12 h-fit">
+
+         {% comment %} Mobile product info {% endcomment %}
+
+          <div class="flex flex-col gap-6 md:hidden">
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}
@@ -118,7 +64,94 @@
                   </div>
                 </div>
               </div>
-              
+              {%- endcase -%}
+            {%- endfor -%}
+            </div>
+
+          {% comment %} Mobile product info end {% endcomment %}
+
+        {% render 'product-media-gallery', variant_images: variant_images %}
+
+         <div class="hidden md:block">
+         {%- for block in section.blocks -%}
+          {%- case block.type -%}
+          {%- when 'description' -%}
+            {%- if product.description != blank -%}
+              {% render 'product-description' %}
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
+        </div>
+      
+      </div>
+     
+      <div class="order-1 col-span-4 md:col-span-5 md:col-start-8">
+        <section
+          x-data
+          id="ProductInfo-{{ section.id }}"
+          class="flex flex-col gap-6"
+        >
+          {%- assign product_form_id = 'product-form-' | append: section.id -%}
+          
+          
+             {% comment %} Desktop product info {% endcomment %}
+              <div class="hidden md:flex flex-col gap-6">
+              {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                  {%- when '@app' -%}
+                    {% render block %}
+                  {%- when 'text' -%}
+                    <p
+                      class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+                      {{ block.shopify_attributes }}
+                    >
+                      {{- block.settings.text -}}
+                    </p>
+                  {%- when 'title' -%}
+                    <div class="flex flex-col gap-2">
+                    <p
+                      class="text-sm text-gray-700 font-normal"
+                      id="Sku-{{ section.id }}"
+                      role="status"
+                      {{ block.shopify_attributes }}
+                    >
+                      <span class="font-semibold">{{ 'products.product.sku' | t }}:</span>
+                      {{- product.selected_or_first_available_variant.sku -}}
+                    </p>
+                    <div class="product__title" {{ block.shopify_attributes }}>
+                      <h1 class="text-5xl">{{ product.title | escape }}</h1>
+                    </div>
+                    </div>
+                  {%- when 'vendor'-%}
+                    <span class="py-1.5 px-2.5 border border-gray-200 rounded-sm w-fit uppercase">{{ product.vendor }}</span>
+                  {%- when 'price' -%}
+                    <div id="price-{{ section.id }}" class="flex flex-col gap-2" role="status" {{ block.shopify_attributes }}>
+                      {%- render 'price',
+                        product: product,
+                        use_variant: true,
+                        show_badges: true,
+                        price_class: 'price--large'
+                      -%}
+                    <div {{ block.shopify_attributes }}>
+                      {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
+                      {% comment %} Klarna goes here {% endcomment %}
+                      <div class="w-full bg-gray-100 p-2.5 text-sm font-normal flex items-center justify-between">
+                        <div>
+                        <span>4 interest-free payments of $12.74.</span>
+                        <a href="#" class="text-brand underline">Learn more</a>
+                        </div>
+                        {% render 'icon', icon: 'klarna-logo', class: '!w-10' %}
+                      </div>
+                    </div>
+                  </div>
+                  {%- endcase -%}
+                {%- endfor -%}
+                </div>
+
+          {% comment %} Desktop product info end {% endcomment %}
+          
+            {%- for block in section.blocks -%}
+            {%- case block.type -%}
               {%- when 'custom_liquid' -%}
                 {{ block.settings.custom_liquid }}
 
@@ -176,9 +209,19 @@
           {%- endfor -%}
 
         </section>
-       
+         <div class="block md:hidden">
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+              {%- when 'description' -%}
+                {%- if product.description != blank -%}
+                  {% render 'product-description' %}
+                  {%- endif -%}
+              {%- endcase -%}
+            {%- endfor -%}
+            </div>
+        </div>
       </div>
-    </div>
+
 
     {% comment %} {% render 'product-media-modal', variant_images: variant_images %} {% endcomment %}
 

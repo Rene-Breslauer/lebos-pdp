@@ -251,10 +251,6 @@ input[name='options[Color]']:checked+label {
 /**
  * Tabs
  */
-.tabs {
-  display: flex;
-  flex-wrap: wrap;
-}
 
 .tabs label {
   @apply order-1 cursor-pointer transition border border-gray-200;
@@ -262,10 +258,6 @@ input[name='options[Color]']:checked+label {
 
 .tabs .tab {
   @apply order-[99] flex-1 w-full hidden;
-}
-
-.tabs input[type=radio] {
-  @apply hidden;
 }
 
 .tabs input[type=radio]:checked+label {
@@ -276,18 +268,14 @@ input[name='options[Color]']:checked+label {
   @apply block;
 }
 
-@media (max-width: 45em) {
+@media (max-width: 767px) {
 
   .tabs .tab,
   .tabs label {
     order: initial;
   }
 
-  /* .tabs label {
-    width: 100%;
-    margin-right: 0;
-    margin-top: 0.2rem;
-  } */
+
 }
 
 .swiper-pagination-bullet {

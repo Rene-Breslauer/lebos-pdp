@@ -12,7 +12,7 @@
   <variant-selects
     id="variant-selects-{{ section.id }}"
     data-section="{{ section.id }}"
-    class="flex flex-col gap-6"
+    class="flex flex-col gap-6 pt-6 md:pt-0"
     {{ block.shopify_attributes }}
   >
     {%- for option in product.options_with_values -%}

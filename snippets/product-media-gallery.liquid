@@ -17,7 +17,7 @@
  {% endif %}
 {% endfor %}  {% endcomment %}
 <div x-data="productGallery('{{ product.handle }}', {{ product.selected_or_first_available_variant.id }})" class="flex w-full max-w-[100vw]">
-  <div x-ref="verticalSlider" class="swiper w-full h-[100px] md:max-w-[100px] md:h-auto overflow-auto">
+  <div x-ref="verticalSlider" class="swiper w-full h-full md:max-w-[100px] md:h-auto overflow-auto">
   <div class="swiper-wrapper w-full">
    {%- for media in product.media -%}
     <div @click="updateImage(event,'{{ shop.url }}/cdn/shop/{{ media.preview_image.src }}')" class="swiper-slide cursor-pointer">

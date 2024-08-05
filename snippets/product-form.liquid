@@ -20,7 +20,7 @@
 
   assign availability = product_availability
   -%}
-<div x-data="productForm('{{ product.handle }}', {{ product.selected_or_first_available_variant.id }},{{ available }}, '{{ availability }}')" class="flex flex-col">
+<div x-data="productForm('{{ product.handle }}', {{ product.selected_or_first_available_variant.id }},{{ available }}, '{{ availability }}')" class="flex flex-col order-2">
   {%- form 'product', product, id: product_form_id, class: 'form flex flex-col gap-6', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
     <input type="hidden" name="id" x-model="selectedVariant" value="{{ product.selected_or_first_available_variant.id }}" {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout or product.selected_or_first_available_variant == nil %} disabled {% endif %} class="product-variant-id">
     <input type="hidden" name="quantity" x-model="quantity" class="product-quantity">
