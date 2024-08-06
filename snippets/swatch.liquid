@@ -21,12 +21,14 @@
     assign swatch_value = 'rgb(' | append: swatch.color.rgb | append: ')'
   endif
 -%}
-
 <span
   {% if swatch_value %}
-    class="swatch w-9 h-9 rounded-full"
+    class="swatch w-9 h-9 rounded-full text-white flex justify-center items-center"
     style="background-image: {{ swatch_value }};{% if swatch_focal_point %} background-position: {{ swatch_focal_point }}; background-size: cover;{% endif %}"
   {% else %}
     class="swatch swatch--unavailable"
   {% endif %}
-></span>
+>
+  {% render 'icon', icon: 'checkmark', class: '!h-3 !w-3 absolute z-100 checkmark' %}
+</span>
+

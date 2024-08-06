@@ -238,14 +238,21 @@ body.no-scroll {
   overflow: hidden;
 }
 
+
 input[name='options[Size]']:checked + label {
   @apply bg-primary border-primary text-white;
 }
 
+
 input[name='options[Color]']:checked+label {
   @apply border-2 border-gray-800;
 }
-
+input[name='options[Color]']+label .checkmark {
+  @apply hidden;
+}
+input[name='options[Color]']:checked+label .checkmark {
+  @apply block;
+}
 
 
 /**
@@ -269,14 +276,20 @@ input[name='options[Color]']:checked+label {
 }
 
 @media (max-width: 767px) {
-
   .tabs .tab,
   .tabs label {
     order: initial;
   }
-
-
 }
+
+.tabs input[type=radio].active+label {
+  @apply bg-gray-800 text-white border-gray-800;
+}
+
+
+
+/* end tabs */
+
 
 .swiper-pagination-bullet {
   @apply !bg-transparent border-2 border-white w-2.5 h-2.5 !opacity-100;

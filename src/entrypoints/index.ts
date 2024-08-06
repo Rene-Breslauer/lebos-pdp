@@ -28,6 +28,7 @@ const init = async () => {
   })
 
 
+
   Alpine.start()
   window.Alpine = Alpine
 }
