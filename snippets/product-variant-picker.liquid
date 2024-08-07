@@ -28,7 +28,7 @@
         <fieldset x-refs="option{{ option.position }}" id="option{{ option.position }}" data-name="{{ option.name }}" data-option="options[{{ option.name }}]" data-form="{{ product_form_id }}">
            <legend class="mb-3 text-gray-800 uppercase">
             <span class="font-semibold">{{ option.name }}:</span>
-            <span data-selected-value>
+            <span data-selected-value x-text="currentOptions[{{ option.position | minus: 1 }}]">
               {{- option.selected_value -}}
             </span>
           </legend>
@@ -48,7 +48,7 @@
           <legend class="mb-3 text-gray-800 uppercase flex justify-between items-center w-full">
             <div>
               <span class="font-semibold">{{ option.name }}:</span>
-              <span data-selected-value>
+              <span data-selected-value x-text="currentOptions[{{ option.position | minus: 1 }}]">
                 {{- option.selected_value -}}
               </span>
             </div>

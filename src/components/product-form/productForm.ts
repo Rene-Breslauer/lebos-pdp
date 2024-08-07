@@ -21,7 +21,7 @@ export default (Alpine: any) => {
      quantity: 1,
      availableVariants: [],
      availableOptions: [],
-
+     currentOptions: [],
 
      init() {
        this.formElement = this.$el.querySelector('.form')
@@ -102,6 +102,7 @@ export default (Alpine: any) => {
                ?.querySelectorAll('.variant-container input')
                  .forEach(input => {
                    if (option?.getAttribute('id') === input?.getAttribute('id')) {
+                    
                      input?.setAttribute(
                        'data-option-value-id',
                        option.getAttribute('id')
@@ -123,7 +124,6 @@ export default (Alpine: any) => {
                    })
              })
          })
-
      },
 
     variantStatus(currentVariant: any) {
@@ -143,13 +143,13 @@ export default (Alpine: any) => {
         }
       })
 
-      let currentOptions = Object.keys(
+      this.currentOptions = Object.keys(
         window.variant[this.selectedVariant].options
       )
 
-      const option1 = currentOptions[0]
-      const option2 = currentOptions[1]
-      const option3 = currentOptions[2]
+      const option1 = this.currentOptions[0]
+      const option2 = this.currentOptions[1]
+      const option3 = this.currentOptions[2]
 
       // Option 1 push to array
       this.availableVariants.forEach(variant => {
