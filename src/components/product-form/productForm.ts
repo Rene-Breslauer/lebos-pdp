@@ -191,8 +191,6 @@ export default (Alpine: any) => {
       this.renderOptions()
     },
 
-
-
      updateVariant(variantId: any) {
        let variant = window.variant[variantId]
 

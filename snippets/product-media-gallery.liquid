@@ -1,23 +1,17 @@
+{% liquid
+   assign current_variant = product.selected_or_first_available_variant 
+  if current_variant.price < current_variant.compare_at_price
+    assign show_badge = true
+    assign badge_type = 'sale'
+  endif
+%}
 
- {% comment %} test
-{% assign variant_images = shop.metaobjects.variant_images %}
-
-{% for fields in shop.metaobjects.variant_images.values %}
- {% if fields %}
- {% assign variants = fields.variants.value %}
- {% assign images = fields.images.value %}
-  <div>
-   {% for variant in variants %}
-   <p>{{ variant.id }}</p>
-   {% endfor %}
-    {% for image in images %}
-      <img src="{{ image.src | img_url: '1x1', scale: 2 }}" alt="{{ image.alt | escape }}" class="w-full">
-   {% endfor %}
-  </div>
- {% endif %}
-{% endfor %}  {% endcomment %}
 <div x-data="productGallery('{{ product.handle }}', {{ product.selected_or_first_available_variant.id }})" class="flex w-full max-w-[100vw]">
-  <div x-ref="verticalSlider" class="swiper w-full h-full md:max-w-[100px] md:h-auto overflow-auto">
+  <div x-ref="verticalSlider" class="swiper w-full h-full md:max-w-[100px] md:h-auto overflow-auto relative">
+    {% if show_badge %}
+      {% assign mobile = true %}
+      {% render 'badge', badge_type: badge_type, mobile: mobile %}
+    {% endif %}
   <div class="swiper-wrapper w-full">
    {%- for media in product.media -%}
     <div @click="updateImage(event,'{{ shop.url }}/cdn/shop/{{ media.preview_image.src }}')" class="swiper-slide cursor-pointer">
@@ -29,7 +23,10 @@
   </div>
   <div class="swiper-pagination md:hidden"></div>
 </div>
-  <div class="hidden md:block w-full object-cover">
+  <div class="hidden md:block w-full object-cover relative">
+    {% if show_badge %}
+      {% render 'badge', badge_type: badge_type %}
+    {% endif %}
       <img 
       x-ref="imageTrack"
       class="featuredMedia w-full"

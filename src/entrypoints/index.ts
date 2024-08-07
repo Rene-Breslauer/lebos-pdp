@@ -20,10 +20,7 @@ const init = async () => {
 
   Alpine.store('currency', {
     formatMoney(price) {
-      return price.toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      });
+      return '$'+ (parseFloat(price)/100).toFixed(2)
     }
   })
 
