@@ -14,7 +14,7 @@
       <div class="grid grid-cols-1 col-span-4 gap-2 md:col-span-6 md:gap-12 h-fit">
 
          {% comment %} Mobile product info {% endcomment %}
-          <div class="flex flex-col mb-2 md:hidden">
+          <div x-data class="flex flex-col mb-2 md:hidden">
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}
@@ -57,7 +57,7 @@
                   {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
                   {% comment %} Klarna goes here {% endcomment %}
                   <div class="w-full bg-gray-100 p-2.5 text-sm font-normal flex items-center justify-between">
-                    <div>
+                    <div class="flex flex-col">
                     <span>4 interest-free payments of $12.74.</span>
                     <a href="#" class="text-brand underline">Learn more</a>
                     </div>
