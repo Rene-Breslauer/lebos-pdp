@@ -75,6 +75,11 @@
       value="{{ value | escape }}"
       form="{{ product_form_id }}"
       class="appearance-none h-0 w-0 absolute inset-0 cursor-pointer hidden"
+      data-option-value-id="{{ value.id }}"
+      data-option-value-available="{{ value.available }}"
+      {% if additional_props %}
+        {{ additional_props }}
+      {% endif %}
       {% if value.selected %}
         checked
       {% endif %}
@@ -83,7 +88,7 @@
     for="{{ option.name }}-{{ value }}"
     class="w-full flex justify-center items-center md:w-auto px-3.5 py-1.5 border border-gray-200 rounded-sm text-sm font-semibold cursor-pointer transition
        {% if value.available == false %}
-        cursor-not-allowed bg-gray-200 line-through text-gray-700
+        sold-out
         {% endif %}"
     >
       {{- value -}}

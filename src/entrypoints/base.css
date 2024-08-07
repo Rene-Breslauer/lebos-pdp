@@ -238,15 +238,23 @@ body.no-scroll {
   overflow: hidden;
 }
 
-
-input[name='options[Size]']:checked + label {
+.variant-container input:not([name='options[Color]']):checked+label {
   @apply bg-primary border-primary text-white;
 }
 
+.variant-container input:not([name='options[Color]']):checked+label.sold-out {
+  @apply cursor-not-allowed bg-gray-200 line-through text-gray-700;
+}
 
+
+
+.variant-container input:not([name='options[Color]']):checked+label {
+  @apply bg-primary border-primary text-white;
+}
 input[name='options[Color]']:checked+label {
   @apply border-2 border-gray-800;
 }
+
 input[name='options[Color]']+label .checkmark {
   @apply hidden;
 }
@@ -281,11 +289,6 @@ input[name='options[Color]']:checked+label .checkmark {
     order: initial;
   }
 }
-
-.tabs input[type=radio].active+label {
-  @apply bg-gray-800 text-white border-gray-800;
-}
-
 
 
 /* end tabs */

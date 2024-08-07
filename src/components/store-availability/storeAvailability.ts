@@ -81,8 +81,6 @@ export default (Alpine: any) => {
           )
           const result = await response.json()
 
-          console.log('result', result)
-
           const variants = result.data.product.variants.nodes
 
           const targetVariant = variants.find(
@@ -112,11 +110,6 @@ export default (Alpine: any) => {
                   value?.location?.metafield?.value
                 )
               })
-            )
-
-            console.log(
-              'pickupLocations hours',
-              this.pickupLocations.formatHours
             )
           } else {
             console.log('Variant not found')

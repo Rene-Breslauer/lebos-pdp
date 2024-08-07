@@ -25,7 +25,7 @@
           endif
       -%}
       {%- if picker_type == 'swatch' -%}
-        <fieldset x-refs="option{{ option.position }}" id="option{{ option.position }}" data-name="{{ option.name }}" data-form="{{ product_form_id }}">
+        <fieldset x-refs="option{{ option.position }}" id="option{{ option.position }}" data-name="{{ option.name }}" data-option="options[{{ option.name }}]" data-form="{{ product_form_id }}">
            <legend class="mb-3 text-gray-800 uppercase">
             <span class="font-semibold">{{ option.name }}:</span>
             <span data-selected-value>
@@ -43,7 +43,7 @@
         </fieldset>
        
       {%- else -%}
-        <fieldset x-refs="option{{ option.position }}" id="option{{ option.position }}" data-name="{{ option.name }}" data-form="{{ product_form_id }}">
+        <fieldset x-refs="option{{ option.position }}" id="option{{ option.position }}" data-name="{{ option.name }}" data-option="options[{{ option.name }}]" data-form="{{ product_form_id }}">
 
           <legend class="mb-3 text-gray-800 uppercase flex justify-between items-center w-full">
             <div>

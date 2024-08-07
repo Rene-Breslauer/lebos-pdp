@@ -130,6 +130,21 @@
     {% endfor %}
   }
 
-  console.log('product', window.product)
+  console.log('product', window.variant)
 
+  // window.options = {
+  //     {% for option in product.options_with_values %}
+  //       "{{ option.name }}": {
+  //         {% for value in option.values %}
+  //           "available": "{{ value.available }}",
+  //           "id": "{{ value.id }}",
+  //           "name": "{{ value.name }}",
+  //           "available": "{{ value.available }}",
+  //           "selected": "{{ value.selected }}",
+  //         {% endfor %}
+  //       }{% unless forloop.last %},{% endunless %}
+  //     {% endfor %}
+  // }
+
+  // console.log('window options',window.variant)
 </script>

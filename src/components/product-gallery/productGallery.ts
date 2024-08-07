@@ -79,33 +79,42 @@ export default (Alpine: any) => {
       },
 
       updateGallery(variant: object) {
-        this.newVariantImages = []
-        this.swiper.destroy()
+       
 
-        let swiperWrapper = this.$el.querySelector('.swiper-wrapper')
-        swiperWrapper.innerHTML = ''
+        if (variant?.featured_media?.preview_image) {
 
-        document.querySelector('.featuredMedia').src =
-          variant.featured_media.preview_image.src
+           this.newVariantImages = []
+           this.swiper.destroy()
 
-        window.variantImages[variant.id].forEach((image: any) => {
-          this.newVariantImages.push(image)
-        })
+           let swiperWrapper = this.$el.querySelector('.swiper-wrapper')
+           swiperWrapper.innerHTML = ''
 
-        this.newVariantImages.forEach((image: any) => {
-          let slide = document.createElement('div')
-          slide.classList.add('swiper-slide', 'cursor-pointer')
-          slide.addEventListener('click', event => {
-            this.updateImage(event, image)
-          })
-          let img = document.createElement('img')
-          img.src = image
-          img.classList.add('h-full', 'w-full', 'object-contain')
-          slide.appendChild(img)
-          swiperWrapper.appendChild(slide)
-        })
+          document.querySelector('.featuredMedia').src = variant.featured_media.preview_image.src
 
-        this.swiper = new Swiper('.swiper', this.config)
+            window.variantImages[variant.id].forEach((image: any) => {
+              this.newVariantImages.push(image)
+            })
+
+            this.newVariantImages.forEach((image: any) => {
+              let slide = document.createElement('div')
+              slide.classList.add('swiper-slide', 'cursor-pointer')
+              slide.addEventListener('click', event => {
+                this.updateImage(event, image)
+              })
+              let img = document.createElement('img')
+              img.src = image
+              img.classList.add('h-full', 'w-full', 'object-contain')
+              slide.appendChild(img)
+              swiperWrapper.appendChild(slide)
+            })
+
+            this.swiper = new Swiper('.swiper', this.config)
+
+            
+        } else {
+          return
+        }
+
 
       },
 

@@ -24,15 +24,15 @@
       checked: checked
     %}
 {% endcomment %}
-
+{% assign name = name | split: '-' | first %}
 <input
   type="{{ type | default: 'radio' }}"
-  id="{{ name }}-{{ value }}-{{ id }}"
+  id="{{ name }}-{{ value }}"
   name="options[{{ name | split: '-' | first }}]"
   value="{{ value }}"
   form="{{ product_form_id }}"
   class="appearance-none absolute h-0 w-0 inset-0 hidden"
-  @click="renderOptions(event.target.value)"
+  @click="renderOptions()"
   {% if checked %}
     checked
   {% endif %}
@@ -44,7 +44,7 @@
   {% endif %}
 >
 <label
-  for="{{ name }}-{{ value }}-{{ id }}"
+  for="{{ name }}-{{ value }}"
   title="{{ value }}"
   class="h-11 w-11 rounded-full flex justify-center items-center cursor-pointer"
 >
