@@ -202,10 +202,13 @@ export default (Alpine: any) => {
          ),
          available: variant.available,
          quantityRuleSoldOut: variant.quantity_rule_sold_out,
-         showCompareAt: variant.price < variant.compare_at_price
+         showCompareAt: variant.price < variant.compare_at_price,
+         sale: variant.price < variant.compare_at_price,
        }
 
        Alpine.store('variant', this.variant)
+
+       console.log('sale price', Alpine.store('variant').sale)
 
      },
 
