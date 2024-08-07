@@ -6,5 +6,4 @@ export {
   ProductForm,
   ProductGallery,
   StoreAvailability
-
 }

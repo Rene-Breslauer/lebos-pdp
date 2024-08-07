@@ -243,7 +243,11 @@ body.no-scroll {
 }
 
 .variant-container input:not([name='options[Color]']):checked+label.sold-out {
-  @apply cursor-not-allowed bg-gray-200 line-through text-gray-700;
+  @apply cursor-not-allowed bg-gray-200 line-through text-gray-700 border-gray-200;
+}
+
+.variant-container input:not([name='options[Color]'])+label.sold-out {
+  @apply cursor-not-allowed bg-gray-200 line-through text-gray-700 border-gray-200;
 }
 
 
