@@ -13,7 +13,10 @@ class="fixed z-[10] inset-0 w-full h-full flex justify-center items-center bg-[r
 <div class="flex flex-col gap-2 px-3.5 pt-3.5 py-5">
 <div class="flex justify-between items-center pb-1">
   <span class="text-sm font-bold uppercase" x-text="popupLocation?.name"></span>
-  <span class="text-xs">Work time today:</span>
+  <div>
+    <span class="text-xs">Work time today:</span>
+    <span x-text="todayHours" class="text-xs font-bold"></span>
+  </div>
 </div>
 <div class="flex flex-col gap-2 p-3.5 bg-gray-100">
   <span class="font-bold uppercase text-xs flex items-center gap-2">

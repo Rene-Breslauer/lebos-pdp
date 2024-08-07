@@ -9,6 +9,7 @@ export default (Alpine: any) => {
       defaultVariantId,
       productHandle,
       popupLocation: null as object | null,
+      todayHours: null as object | null,
 
       init() {
         window.addEventListener('option-changed', event => {
@@ -17,7 +18,9 @@ export default (Alpine: any) => {
         this.updateStores({ id: this.defaultVariantId })
 
         this.$watch('locationModal', value => {
-          document.querySelector('body').style.overflowY = value ? 'hidden' : 'auto';
+          document.querySelector('body').style.overflowY = value
+            ? 'hidden'
+            : 'auto'
         })
       },
 
@@ -108,6 +111,8 @@ export default (Alpine: any) => {
                 pickUpTime: value?.pickUpTime,
                 formattedHours: this.formatHours(
                   value?.location?.metafield?.value
+
+                  
                 )
               })
             )
@@ -124,36 +129,101 @@ export default (Alpine: any) => {
       },
 
       formatHours(hours) {
-        const parsedHours = JSON.parse(hours)
-        const operatingHours = parsedHours?.operating_hours?.regular_hours
+      const parsedHours = JSON.parse(hours);
+      const operatingHours = parsedHours?.operating_hours?.daily_hours;
 
-        if (!operatingHours) {
-          return ['No operating hours available']
+      if (!operatingHours) {
+        return ['No operating hours available'];
+      }
+
+      const groupedHours = this.groupConsecutiveDays(operatingHours);
+      const formattedHoursArray = groupedHours.map(
+        group =>
+          `<span>${group.days}</span> <span>${this.parseTime(
+            group.open
+          )} - ${this.parseTime(group.close)}</span>`
+      );
+
+      const today = new Date().toLocaleString('en-us', { weekday: 'long' });
+
+      const todayHoursObj = this.findTodayHours(groupedHours, today);
+
+      this.todayHours = todayHoursObj
+        ? `${this.parseTime(todayHoursObj.open)} - ${this.parseTime(todayHoursObj.close)}`
+        : 'Closed';
+
+      return formattedHoursArray;
+    },
+
+    findTodayHours(groupedHours, today) {
+      for (const group of groupedHours) {
+        const daysRange = group.days.split('-');
+        if (daysRange.length === 1 && daysRange[0] === today) {
+          return group;
+        } else if (daysRange.length === 2) {
+          const startDayIndex = this.getDayIndex(daysRange[0]);
+          const endDayIndex = this.getDayIndex(daysRange[1]);
+          const todayIndex = this.getDayIndex(today);
+
+          if (startDayIndex <= todayIndex && todayIndex <= endDayIndex) {
+            return group;
+          }
+        }
+      }
+      return null;
+    },
+
+    getDayIndex(day) {
+      const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      return daysOfWeek.indexOf(day);
+    },
+
+    groupConsecutiveDays(hours) {
+      let groupedHours = [];
+      let currentGroup = { days: [], open: hours[0].open, close: hours[0].close };
+
+      hours.forEach((hour, index) => {
+        if (hour.open === currentGroup.open && hour.close === currentGroup.close) {
+          currentGroup.days.push(hour.days);
+        } else {
+          groupedHours.push(currentGroup);
+          currentGroup = { days: [hour.days], open: hour.open, close: hour.close };
         }
 
-        const formattedHoursArray = operatingHours.map(
-          hour =>
-            `<span>${hour.days}</span> <span>${this.parseTime(
-              hour.open
-            )} - ${this.parseTime(hour.close)}</span>`
-        )
+        if (index === hours.length - 1) {
+          groupedHours.push(currentGroup);
+        }
+      });
 
-        return formattedHoursArray
-      },
+      return groupedHours.map(group => {
+        if (group.days.length > 1) {
+          return {
+            days: `${group.days[0]}-${group.days[group.days.length - 1]}`,
+            open: group.open,
+            close: group.close
+          };
+        } else {
+          return {
+            days: group.days[0],
+            open: group.open,
+            close: group.close
+          };
+        }
+      });
+    },
 
-      parseTime(time: string) {
-        const [hour, minute] = time.split(':').map(Number)
-        const ampm = hour >= 12 ? 'PM' : 'AM'
-        const adjustedHour = hour % 12 || 12 // Convert 0 to 12 for midnight
-        return `${adjustedHour}:${minute.toString().padStart(2, '0')} ${ampm}`
-      },
+    parseTime(time) {
+      const [hour, minute] = time.split(':');
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const formattedHour = hour % 12 || 12;
+      return `${formattedHour}:${minute} ${ampm}`;
+    },
+
 
       renderPopup(location: object) {
         this.popupLocation = location
         this.locationModal = true
-      },
-
-
+      }
     })
   )
 }
