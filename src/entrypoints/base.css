@@ -271,7 +271,7 @@ input[name='options[Color]']:checked+label .checkmark {
  * Tabs
  */
 
-.tabs label {
+.tabs .label {
   @apply order-1 cursor-pointer transition border border-gray-200;
 }
 
@@ -279,17 +279,17 @@ input[name='options[Color]']:checked+label .checkmark {
   @apply order-[99] flex-1 w-full hidden;
 }
 
-.tabs input[type=radio]:checked+label {
+.tabs .label.active {
   @apply bg-gray-800 text-white border-gray-800;
 }
 
-.tabs input[type=radio]:checked+label+.tab {
+.tabs .label.active + .tab {
   @apply block;
 }
 
 @media (max-width: 767px) {
   .tabs .tab,
-  .tabs label {
+  .tabs .label {
     order: initial;
   }
 }

@@ -1,24 +1,25 @@
-<div class="flex items-start w-full order-3">
+<div x-data="{ activeTab: 0 }" class="flex items-start w-full order-3">
 <div class="tabs flex flex-wrap flex-col md:flex-row w-full">
-    <input class="hidden" type="radio" name="tabs" id="tabone" checked="checked">
-    <label for="tabone" class="h-11 w-full md:w-1/2 py-3 px-5 flex justify-center items-center gap-3 uppercase font-bold">
+    <div @click="activeTab = 0"
+    :class="{'active': activeTab === 0}" class="label h-11 w-full md:w-1/2 py-3 px-5 flex justify-center items-center gap-3 uppercase font-bold">
     {% render 'icon', icon: 'info-circle', class: '!h-4 !w-4' %}
     <span>
       Description
     </span>
-  </label>
+  </div>
   <div class="tab">
     <div class="product__description rte quick-add-hidden pt-9 block border-b border-gray-800 pb-10" {{ block.shopify_attributes }}>
       {{ product.description }}
     </div>
   </div>
-  <input class="hidden" type="radio" name="tabs" id="tabtwo">
-  <label for="tabtwo" class="h-11 w-full md:w-1/2 py-3 px-5 flex justify-center items-center gap-3 uppercase font-bold">
+  <div
+  @click="activeTab = 1"
+   :class="{'active': activeTab === 1}" class="label h-11 w-full md:w-1/2 py-3 px-5 flex justify-center items-center gap-3 uppercase font-bold">
     {% render 'icon', icon: 'list', class: '!h-4 !w-4' %}
     <span>
       Specifications
     </span>
-  </label>
+  </div>
   <div class="tab">
     <div class="product__description rte quick-add-hidden pt-9 block border-b border-gray-800 pb-10" {{ block.shopify_attributes }}>
     <h3>Specifications</h3>
