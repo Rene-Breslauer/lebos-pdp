@@ -262,5 +262,19 @@
         "default": true
       }
     ]
+  },
+  {
+    "name": "Product",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Product"
+      },
+      {
+        "type": "url",
+        "id": "size_guide",
+        "label": "Size Guide"
+      }
+    ]
   }
 ]

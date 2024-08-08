@@ -54,7 +54,7 @@
             </div>
             <div class="flex md:hidden items-center">
               {% render 'icon', icon: 'ruler', class: '!h-10 !w-10' %}
-              <a href="/pages/size-guide" target="_blank" class="text-gray-800 text-sm underline">Size Guide</a>
+              <a href="{{ settings.size_guide }}" target="_blank" class="text-gray-800 text-sm underline">{{ 'products.product.size_guide' | t }}</a>
           </div>
           </legend>
           <div class="flex w-full gap-2 variant-container">
@@ -68,7 +68,7 @@
           {% if option.name == 'Size' %}
           <div class="hidden md:flex items-center">
             {% render 'icon', icon: 'ruler', class: '!h-10 !w-10' %}
-            <a href="/pages/size-guide" target="_blank" class="text-gray-800 text-sm underline">Size Guide</a>
+            <a href="{{ settings.size_guide }}" target="_blank" class="text-gray-800 text-sm underline">{{ 'products.product.size_guide' | t }}</a>
           </div>
           {% endif %}
         </fieldset>

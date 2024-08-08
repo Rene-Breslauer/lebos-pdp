@@ -24,18 +24,6 @@
           "settings": {
           }
         },
-        "variant_picker_bVkTzp": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
-          }
-        },
-        "quantity_selector_KJpejp": {
-          "type": "quantity_selector",
-          "settings": {
-          }
-        },
         "buy_buttons_PCFpTp": {
           "type": "buy_buttons",
           "settings": {
@@ -56,6 +44,8 @@
         "description_yCkjKR": {
           "type": "description",
           "settings": {
+            "tab_heading_left": "Description",
+            "tab_heading_right": "Specifications"
           }
         }
       },
@@ -64,8 +54,6 @@
         "sku_8QXAcH",
         "title_fKqtqT",
         "price_7M9UeG",
-        "variant_picker_bVkTzp",
-        "quantity_selector_KJpejp",
         "buy_buttons_PCFpTp",
         "product_form_hgwJTB",
         "store_availability_mTWwbz",
@@ -74,15 +62,7 @@
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "",
-        "media_size": "large",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "gallery_layout": "stacked",
-        "media_position": "left",
-        "image_zoom": "lightbox",
-        "mobile_thumbnails": "hide",
-        "hide_variants": false,
-        "enable_video_looping": false,
+        "trust_pilot": "shopify:\/\/shop_images\/trust_pilot.png",
         "padding_top": 36,
         "padding_bottom": 36
       }

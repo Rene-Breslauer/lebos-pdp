@@ -38,6 +38,13 @@
       "sku": "SKU",
       "on_sale": "Sale",
       "product_variants": "Product variants",
+      "size_guide": "Size Guide",
+      "store_details": "Store Details",
+      "available_to_pick_up": "Available to pick up in the following stores",
+      "work_time_today": "Work time today:",
+      "working_hours": "Working Hours:",
+      "address": "Address",
+      "availability_disclaimer": "For the health and safety of our clients and associates, store hours may vary. Call your local store for operating hours.",
       "media": {
         "gallery_viewer": "Gallery Viewer",
         "load_image": "Load image {{ index }} in gallery view",

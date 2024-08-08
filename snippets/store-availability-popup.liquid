@@ -4,7 +4,7 @@ class="fixed z-[10] inset-0 w-full h-full flex justify-center items-center bg-[r
 <dialog @click.away="locationModal = false" class="store-availability flex flex-col bg-white w-full max-w-[460px] mx-auto z-10 shadow-xl">
 <div class="border-b border-gray-200 ">
   <div class="flex justify-between items-center w-full p-3.5">
-    <span class="font-bold">STORE DETAILS</span>
+    <span class="font-bold uppercase">{{ 'products.product.store_details' | t }}</span>
     <span class="cursor-pointer" @click="locationModal = false">
     {% render 'icon', icon: 'cross', class: '!h-2.5 !w-2.5' %}
     </span>
@@ -14,14 +14,14 @@ class="fixed z-[10] inset-0 w-full h-full flex justify-center items-center bg-[r
 <div class="flex justify-between items-center pb-1">
   <span class="text-sm font-bold uppercase" x-text="popupLocation?.name"></span>
   <div>
-    <span class="text-xs">Work time today:</span>
+    <span class="text-xs">{{ 'products.product.work_time_today' | t }}</span>
     <span x-text="todayHours" class="text-xs font-bold"></span>
   </div>
 </div>
 <div class="flex flex-col gap-2 p-3.5 bg-gray-100">
   <span class="font-bold uppercase text-xs flex items-center gap-2">
     {% render 'icon', icon: 'pin', class: '!h-5 !w-5' %}
-    Address</span>
+    {{ 'products.product.address' | t }}</span>
   <div>
     <span class="text-xs" x-html="popupLocation?.addressPopup"></span><br>
     <a :href="'tel:'+popupLocation?.phone" class="text-xs text-brand underline" x-text="popupLocation?.phone"></a>
@@ -30,13 +30,13 @@ class="fixed z-[10] inset-0 w-full h-full flex justify-center items-center bg-[r
 <div class="flex flex-col gap-2 p-3.5 bg-gray-100">
  <span class="font-bold uppercase text-xs flex items-center gap-2">
   {% render 'icon', icon: 'clock', class: '!h-5 !w-5' %}
-  Working Hours:</span>
+  {{  'products.product.working_hours' | t }}</span>
  <template x-for="(hours, days) in popupLocation?.formattedHours" :key="days">
    <div class="px-3.5 py-1.5 bg-white flex items-center justify-between uppercase text-xs" x-html="hours">
   </div>
  </template>
  </div>
-<span class="text-brand text-xs">For the health and safety of our clients and associates, store hours may vary. Call your local store for operating hours.</span>
+<span class="text-brand text-xs">{{ 'products.product.availability_disclaimer' | t }}</span>
 </div>
 </dialog>
 </div>
