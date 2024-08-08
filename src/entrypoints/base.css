@@ -5,7 +5,7 @@
 @layer base {
   @font-face {
     font-family: ZillaSlab;
-    src: url('/assets/ZillaSlab-Regular.woff2') format('woff2-variations');
+    src: url('/src/assets/ZillaSlab-Regular.woff2') format('woff2-variations');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -13,7 +13,7 @@
 
   @font-face {
     font-family: ZillaSlab;
-    src: url('/assets/ZillaSlab-Italic.woff2') format('woff2-variations');
+    src: url('/src/assets/ZillaSlab-Italic.woff2') format('woff2-variations');
     font-weight: 400;
     font-style: italic;
     font-display: swap;
@@ -21,7 +21,7 @@
 
   @font-face {
     font-family: ZillaSlab;
-    src: url('/assets/ZillaSlab-Medium.woff2') format('woff2-variations');
+    src: url('/src/assets/ZillaSlab-Medium.woff2') format('woff2-variations');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -29,7 +29,7 @@
 
   @font-face {
     font-family: ZillaSlab;
-    src: url('/assets/ZillaSlab-MediumItalic.woff2') format('woff2-variations');
+    src: url('/src/assets/ZillaSlab-MediumItalic.woff2') format('woff2-variations');
     font-weight: 500;
     font-style: italic;
     font-display: swap;
@@ -37,7 +37,7 @@
 
   @font-face {
     font-family: ZillaSlab;
-    src: url('/assets/ZillaSlab-SemiBold.woff2') format('woff2-variations');
+    src: url('/src/assets/ZillaSlab-SemiBold.woff2') format('woff2-variations');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -45,7 +45,7 @@
 
   @font-face {
     font-family: ZillaSlab;
-    src: url('/assets/ZillaSlab-SemiBoldItalic.woff2') format('woff2-variations');
+    src: url('/src/assets/ZillaSlab-SemiBoldItalic.woff2') format('woff2-variations');
     font-weight: 600;
     font-style: italic;
     font-display: swap;
@@ -53,7 +53,7 @@
 
   @font-face {
     font-family: ZillaSlab;
-    src: url('/assets/ZillaSlab-Bold.woff2') format('woff2-variations');
+    src: url('/src/assets/ZillaSlab-Bold.woff2') format('woff2-variations');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -61,7 +61,7 @@
 
   @font-face {
     font-family: ZillaSlab;
-    src: url('/assets/ZillaSlab-BoldItalic.woff2') format('woff2-variations');
+    src: url('/src/assets/ZillaSlab-BoldItalic.woff2') format('woff2-variations');
     font-weight: 700;
     font-style: italic;
     font-display: swap;
@@ -69,7 +69,7 @@
 
   @font-face {
     font-family: Manrope;
-    src: url('/assets/Manrope-Regular.woff2') format('woff2-variations');
+    src: url('/src/assets/Manrope-Regular.woff2') format('woff2-variations');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -77,7 +77,7 @@
 
   @font-face {
     font-family: Manrope;
-    src: url('/assets/Manrope-Medium.woff2') format('woff2-variations');
+    src: url('/src/assets/Manrope-Medium.woff2') format('woff2-variations');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -85,7 +85,7 @@
 
   @font-face {
     font-family: Manrope;
-    src: url('/assets/Manrope-SemiBold.woff2') format('woff2-variations');
+    src: url('/src/assets/Manrope-SemiBold.woff2') format('woff2-variations');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -93,7 +93,7 @@
 
   @font-face {
     font-family: Manrope;
-    src: url('/assets/Manrope-Bold.woff2') format('woff2-variations');
+    src: url('/src/assets/Manrope-Bold.woff2') format('woff2-variations');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -101,7 +101,7 @@
 
   @font-face {
     font-family: Manrope;
-    src: url('/assets/Manrope-ExtraBold.woff2') format('woff2-variations');
+    src: url('/src/assets/Manrope-ExtraBold.woff2') format('woff2-variations');
     font-weight: 800;
     font-style: normal;
     font-display: swap;
