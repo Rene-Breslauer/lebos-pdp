@@ -346,3 +346,12 @@ input[type="number"].quantity {
 .product__description.rte p strong {
   @apply font-semibold uppercase;
 }
+
+.swiper-featured-col .swiper-button-prev,.swiper-featured-col .swiper-button-next {
+  @apply md:p-2.5 md:border md:border-gray-100 p-0 border-0 text-xs text-brand;
+}
+
+.swiper-featured-col .swiper-button-prev::after,
+.swiper-featured-col .swiper-button-next::after {
+  @apply text-sm;
+}

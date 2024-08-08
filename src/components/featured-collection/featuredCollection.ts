@@ -21,11 +21,9 @@ export default (Alpine: any) => {
               slidesPerView: 5
             }
           },
-          pagination: {
-            el: '.swiper-pagination'
-          },
-          zoom: {
-            maxRatio: 2
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
           }
         }
 
@@ -43,7 +41,21 @@ export default (Alpine: any) => {
         cards.forEach((card, i) => {
           if (parseInt(card.dataset.index) === index) {
             let image = card.querySelector('.card__media > div > img')
+            let priceContainer = card.querySelector('.price__container')
+            priceContainer.innerHTML = ''
+
             image.setAttribute('src', variantImage)
+            
+            if (variant.price >= variant.compare_at_price) {
+              priceContainer.innerHTML = `<span class="text-sm font-bold text-gray-800">${Alpine.store('currency').formatMoney(variant.price)}</span>`
+            } else {
+              priceContainer.innerHTML = `<span class="text-sm font-bold text-gray-800">${Alpine.store(
+                'currency'
+              ).formatMoney(variant.price)}</span> 
+              <span class="text-xs line-through">${Alpine.store(
+                'currency'
+              ).formatMoney(variant.compare_at_price)}</span>`
+            }
           }
         })
       },
