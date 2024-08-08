@@ -11,10 +11,12 @@ const init = async () => {
   const { ProductForm } = await import('../components/index')
   const { ProductGallery } = await import('../components/index')
   const { StoreAvailability } = await import('../components/index')
+  const { featuredCollection } = await import('../components/index')
 
   Alpine.plugin(ProductForm)
   Alpine.plugin(ProductGallery)
   Alpine.plugin(StoreAvailability)
+  Alpine.plugin(featuredCollection)
 
   Alpine.store('variant', {})
 

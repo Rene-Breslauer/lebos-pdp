@@ -128,7 +128,7 @@
                     </div>
                   {%- when 'vendor'-%}
                     <div class="flex justify-between items-center">
-                    <span class="py-1.5 px-2.5 border border-gray-200 rounded-sm w-fit uppercase">{{ product.vendor }}</span>
+                    {% render 'product-vendor' %}
                     <img src="{{ section.settings.trust_pilot | img_url: '400x' }}" alt="Trust Pilot" class="h-5">
                     </div>
                   {%- when 'price' -%}

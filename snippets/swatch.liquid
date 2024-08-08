@@ -23,12 +23,14 @@
 -%}
 <span
   {% if swatch_value %}
-    class="swatch w-9 h-9 rounded-full text-white flex justify-center items-center"
+  class="swatch {% if featured_collection %} w-4 h-4 {% else %} w-9 h-9 {% endif %} %} rounded-full text-white flex justify-center items-center"
     style="background-image: {{ swatch_value }};{% if swatch_focal_point %} background-position: {{ swatch_focal_point }}; background-size: cover;{% endif %}"
   {% else %}
     class="swatch swatch--unavailable"
   {% endif %}
 >
+{% unless featured_collection %}
   {% render 'icon', icon: 'checkmark', class: '!h-3 !w-3 absolute z-100 checkmark' %}
+{% endunless %}
 </span>
 
