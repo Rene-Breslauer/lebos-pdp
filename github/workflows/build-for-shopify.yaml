@@ -64,6 +64,7 @@ jobs:
           git add .
           git commit --amend --no-edit
           git add -f assets/leb-*
+          git add -f assets/cab-*
           git add -f snippets/adastra.liquid
           git commit -m "Shopify git-busting commit: `date`"
 
