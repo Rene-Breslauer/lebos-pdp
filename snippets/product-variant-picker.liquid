@@ -53,7 +53,7 @@
               </span>
             </div>
             <div class="flex md:hidden items-center">
-              {% render 'icon', icon: 'ruler', class: '!h-10 !w-10' %}
+              {% render 'icon', icon: 'ruler', class: '!h-5 !w-10' %}
               <a href="{{ settings.size_guide }}" target="_blank" class="text-gray-800 text-sm underline">{{ 'products.product.size_guide' | t }}</a>
           </div>
           </legend>
@@ -66,8 +66,8 @@
           %}
           </div>
           {% if option.name == 'Size' %}
-          <div class="hidden md:flex items-center">
-            {% render 'icon', icon: 'ruler', class: '!h-10 !w-10' %}
+          <div class="hidden md:flex items-center mt-2">
+            {% render 'icon', icon: 'ruler', class: '!h-5 !w-10' %}
             <a href="{{ settings.size_guide }}" target="_blank" class="text-gray-800 text-sm underline">{{ 'products.product.size_guide' | t }}</a>
           </div>
           {% endif %}

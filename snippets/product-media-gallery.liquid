@@ -1,8 +1,8 @@
 <div x-data="productGallery('{{ product.handle }}', {{ product.selected_or_first_available_variant.id }})" class="flex w-full max-w-[100vw]">
   <div x-ref="verticalSlider" class="swiper w-full h-full md:max-w-[100px] md:h-auto overflow-auto relative">
-    <div class="bg-gradient-to-t from-transparent to-white absolute top-0 h-10 w-full z-[2]">
+    <div class="hidden md:block bg-gradient-to-t from-transparent to-white absolute top-0 h-10 w-full z-[2]">
     </div>
-    <div class="bg-gradient-to-b from-transparent to-white absolute bottom-0 h-10 w-full z-[2]">
+    <div class="hidden md:block bg-gradient-to-b from-transparent to-white absolute bottom-0 h-10 w-full z-[2]">
     </div>
       <div x-show="$store.variant.sale" x-cloak class="block md:hidden absolute z-[10] top-3 left-3">
         <span class="px-2.5 py-1.5 bg-gray-800 rounded-sm text-white uppercase">{{ 'products.product.on_sale' | t}}</span>
