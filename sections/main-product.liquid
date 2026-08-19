@@ -168,7 +168,7 @@
                 %}
 
               {%- when 'product_form' -%}
-              {% render 'product-form', product: product, block: block, , product_form_id: product_form_id %}
+              {% render 'product-form', product: product, block: block, product_form_id: product_form_id %}
               
                
               {%- when 'rating' -%}
@@ -1149,3 +1149,15 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'product-form', product: product, block: block, , product_form_id:
+    product_form_id %}"
+  to: "{% render 'product-form', product: product, block: block, product_form_id:
+    product_form_id %}"
+  position: 7950..8043
+{% endcomment %}
